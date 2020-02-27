@@ -1,0 +1,12 @@
+﻿Predictors,Lexical,Syntactic
+ASD,0.09,0.16
+Visit ,-0.2,-0.2
+Visit * ASD,0.13,0.08
+Vineland Socialization (VS),0.57,0.75
+VS *ASD,-0.37,-0.7
+VS * Visit,-0.13,-0.16
+VS * ASD * Visit,0,0
+Mullen Expressive Language (MEL),-0.56,-0.47
+MEL * ASD,0.41,0
+MEL * Visit,0.11,0
+MEL * ASD * Visit ,-0.19,0

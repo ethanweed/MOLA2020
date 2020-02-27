@@ -31,6 +31,33 @@ bibliography: packages.bib
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
+```{r libraries}
+pacman::p_load("dplyr")
+```
+
+
+```{r colorbar, echo=FALSE}
+# colorbar function copied from: https://stackoverflow.com/questions/49916591/how-to-reverse-only-one-bar-in-one-cell-if-the-value-is-negative-with-kableextra
+cb <- function(x) {
+  range <- max(abs(x))
+  width <- round(abs(x / range * 50), 2)
+  ifelse(
+    x > 0,
+    paste0(
+      '<span style="display: inline-block; border-radius: 2px; ', 
+      'padding-right: 2px; background-color: lightgreen; width: ', 
+      width, '%; margin-left: 50%; text-align: left;">', x, '</span>'
+    ),
+    paste0(
+      '<span style="display: inline-block; border-radius: 2px; ', 
+      'padding-right: 2px; background-color: lightpink; width: ', 
+      width, '%; margin-right: 50%; text-align: right; float: right; ">', x, '</span>'
+    )
+  )
+}
+```
+
+
 # Introduction
 
 Social impairment in ASD has been associated with an impaired ability and propensity to imitate others. However, the extent and form of impairment in imitation in ASD is still unclear. Here we focus on linguistic alignment: the tendency to re-use an interlocutor’s words (“mommy, give me the giraffe”, “is that a giraffe?”), and syntax (“the giraffe has fallen”, “yes and the elephant has gone to help her”). Previous studies indicated typical alignment in (low support needs) participants with ASD involved highly structured, task-oriented conversations. Given the centrality of alignment in establishing common ground and rapport in social interactions, we need to assess whether alignment is typical also in everyday unscripted conversations.
@@ -47,34 +74,72 @@ We analyzed spontaneous speech in 67 parent-child dyads from a longitudinal corp
 
 # Results
 
-See table for details. Children in both groups consistently align their lexical and syntactic choices to their parents beyond the surrogate-pair baseline. The number of utterances with any form of alignment increases with age in both groups, albeit less so for children with ASD. Further, the actual number of linguistic forms aligned in those utterances decreases with age and more so in the TD children. This indicates that as they grow, children might engage more in their parents’ linguistic production by reusing their words and syntax, but they do so more flexibly and employ them in slightly different constructions (thus reducing the level of alignment).
-Verbal skills were positively related to alignment rate in both groups, but negatively to alignment level (for both groups on syntactic levels and only the ASD group for lexical levels). Socialization skills were positively related to lexical alignment rate for both groups, and to the increase in syntactic alignment rates for both groups. They were also strongly negatively related to syntactic alignment levels. No relation was found with MVR.
+See table for details. Children in both groups consistently align their lexical and syntactic choices to their parents beyond the surrogate-pair baseline. The number of utterances with any form of alignment increases with age in both groups, albeit less so for children with ASD. 
 
-```{r mytable, out.width='80%'}
-knitr::kable(iris[1:10, 1:4], caption = 'Table caption.',align = 'c',"html")
-```
+```{r table1, message=FALSE, warning = F, out.width='100%'}
 
-Or with figures: Figure \@ref(fig:standard-plot), or Figure \@ref(fig:morefigs).
+caption = "Alignment Rate: Do Children Align?"
 
-```{r standard-plot, out.width='80%', fig.align='center', fig.cap='Great figure!', fig.height=5}
-plot(mtcars[1:2])
-```
+t1 <- read.csv("/Users/ethan/Documents/GitHub/MOLA2020/Poster/Table1a.csv")
 
-```{r morefigs, out.width='80%', echo=TRUE, fig.cap='Amazing, right?!', fig.height=5}
-data <- iris
+t1 %>%
+  mutate(
+    Lexical = cb(Lexical),
+    Syntactic = cb(Syntactic)
+  ) %>%
+  knitr::kable(escape = F, caption = caption, booktabs = TRUE, align = "c")
 
-plot(x = data$Sepal.Length, 
-     y = data$Sepal.Width, 
-     col = data$Species,
-     pch = 19, 
-     xlab = "Sepal Length (cm)",
-     ylab = "Sepal Width (cm)")
+#kable(t1, "html", align = "c", caption = "Alignment Rate: Do Children Align?", booktabs = T)
 
 ```
+
+
+Further, the actual number of linguistic forms aligned in those utterances decreases with age and more so in the TD children. This indicates that as they grow, children might engage more in their parents’ linguistic production by reusing their words and syntax, but they do so more flexibly and employ them in slightly different constructions (thus reducing the level of alignment). Verbal skills were positively related to alignment rate in both groups, but negatively to alignment level (for both groups on syntactic levels and only the ASD group for lexical levels). Socialization skills were positively related to lexical alignment rate for both groups, and to the increase in syntactic alignment rates for both groups. They were also strongly negatively related to syntactic alignment levels. No relation was found with MVR.
+
+
+
+```{r table2, out.width='80%'}
+library(kableExtra)
+
+caption = "Alignment Level: How Much Do Children Align?"
+
+t2 <- read.csv("/Users/ethan/Documents/GitHub/MOLA2020/Poster/Table2a.csv")
+
+t2 %>%
+  mutate(
+    Lexical = cb(Lexical),
+    Syntactic = cb(Syntactic)
+  ) %>%
+  knitr::kable(escape = F, caption = caption, booktabs = TRUE, align = "c")
+
+```
+
+
+
+
+
+
+
+```{r table3, out.width='80%'}
+library(kableExtra)
+
+caption = "Exact Repetitions"
+
+t3 <- read.csv("/Users/ethan/Documents/GitHub/MOLA2020/Poster/Table3a.csv")
+
+t3 %>%
+  mutate(
+    Lexical = cb(Lexical),
+    Syntactic = cb(Syntactic)
+  ) %>%
+  knitr::kable(escape = F, caption = caption, booktabs = TRUE, align = "c")
+
+```
+
 
 # Next Steps
 
-Aliquam sed faucibus risus, quis efficitur erat. Vestibulum semper mauris quis tempus eleifend. Aliquam sagittis dictum ipsum, quis viverra ligula eleifend ut. Curabitur sagittis vitae arcu eget faucibus. In non elementum felis. Duis et aliquam nunc. Nunc pulvinar sapien nunc, vel pretium nisi efficitur in. Fusce fringilla maximus leo et maximus. Fusce at ligula laoreet, iaculis mi at, auctor odio. Praesent sed elementum justo. Aenean consectetur risus rhoncus tincidunt efficitur. Praesent dictum mauris at diam maximus maximus [@R-posterdown].
+
 
 # Conclusion
 
