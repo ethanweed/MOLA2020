@@ -32,7 +32,7 @@ knitr::opts_chunk$set(echo = FALSE)
 ```
 
 ```{r libraries}
-pacman::p_load("dplyr")
+pacman::p_load("dplyr", "kableExtra")
 ```
 
 
@@ -46,7 +46,7 @@ cb <- function(x) {
     paste0(
       '<span style="display: inline-block; border-radius: 2px; ', 
       'padding-right: 2px; background-color: lightgreen; width: ', 
-      width, '%; margin-left: 50%; text-align: left;">', x, '</span>'
+      width, '%; margin-left: 50%; text-align: right;">', x, '</span>'
     ),
     paste0(
       '<span style="display: inline-block; border-radius: 2px; ', 
@@ -87,7 +87,7 @@ t1 %>%
     Lexical = cb(Lexical),
     Syntactic = cb(Syntactic)
   ) %>%
-  knitr::kable(escape = F, caption = caption, booktabs = TRUE, align = "c")
+  knitr::kable(escape = F, caption = caption, booktabs = FALSE, align = "l")
 
 #kable(t1, "html", align = "c", caption = "Alignment Rate: Do Children Align?", booktabs = T)
 
@@ -99,7 +99,7 @@ Further, the actual number of linguistic forms aligned in those utterances decre
 
 
 ```{r table2, out.width='80%'}
-library(kableExtra)
+
 
 caption = "Alignment Level: How Much Do Children Align?"
 
@@ -110,7 +110,7 @@ t2 %>%
     Lexical = cb(Lexical),
     Syntactic = cb(Syntactic)
   ) %>%
-  knitr::kable(escape = F, caption = caption, booktabs = TRUE, align = "c")
+  knitr::kable(escape = F, caption = caption, booktabs = FALSE, align = "l")
 
 ```
 
@@ -121,7 +121,7 @@ t2 %>%
 
 
 ```{r table3, out.width='80%'}
-library(kableExtra)
+
 
 caption = "Exact Repetitions"
 
@@ -132,7 +132,7 @@ t3 %>%
     Lexical = cb(Lexical),
     Syntactic = cb(Syntactic)
   ) %>%
-  knitr::kable(escape = F, caption = caption, booktabs = TRUE, align = "c")
+  knitr::kable(escape = F, caption = caption, booktabs = FALSE, align = "l")
 
 ```
 
