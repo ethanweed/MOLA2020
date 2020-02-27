@@ -1,0 +1,87 @@
+---
+title: Intact but Atypical Lexical and Syntactic Alignment in Spontaneous Speech of Children with Autism Spectrum Disorder
+author:
+  - name: Riccardo Fusaroli
+    affil: 1
+    orcid: '0000-0003-4775-5219'
+  - name: Ethan Weed
+    affil: 1
+    orcid: '0000-0002-3921-9101'
+  - name: Deborah Fein
+    affil: 2
+    orcid: '0000-0002-8478-5938'
+  - name: Letitia Naigles
+    affil: 2
+    orcid: '0000-0003-2168-9700'
+affiliation:
+  - num: 1
+    address: Aarhus University
+  - num: 2
+    address: University of Connecticut
+column_numbers: 3
+logoright_name: https&#58;//raw.githubusercontent.com/brentthorne/posterdown/master/images/betterhexlogo.png
+logoleft_name: https&#58;//raw.githubusercontent.com/brentthorne/posterdown/master/images/betterhexlogo.png
+output: 
+  posterdown::posterdown_html:
+    self_contained: false
+bibliography: packages.bib
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Introduction
+
+Social impairment in ASD has been associated with an impaired ability and propensity to imitate others. However, the extent and form of impairment in imitation in ASD is still unclear. Here we focus on linguistic alignment: the tendency to re-use an interlocutor’s words (“mommy, give me the giraffe”, “is that a giraffe?”), and syntax (“the giraffe has fallen”, “yes and the elephant has gone to help her”). Previous studies indicated typical alignment in (low support needs) participants with ASD involved highly structured, task-oriented conversations. Given the centrality of alignment in establishing common ground and rapport in social interactions, we need to assess whether alignment is typical also in everyday unscripted conversations.
+
+## Objectives
+
+We investigated 
+1) the developmental trajectory of linguistic alignment in children with ASD and typically developing children during spontaneous parent-child interactions 
+2) whether the trajectory is affected by the clinical and cognitive features of the child.
+
+# Methods
+
+We analyzed spontaneous speech in 67 parent-child dyads from a longitudinal corpus (30 minutes of play activities, 6 visits over 2 years). We included 32 children diagnosed with ASD and 35 linguistically matched TD children (mean age at recruitment respectively 32.76 and 20.27 months). Alignment was calculated using the ALIGN Python library (Duran et al., 2019). We first contrasted child alignment in actual conversations with that in surrogate pairs formed by a parent and a child from two different dyads. We used Bayesian multilevel zero-and-one-inflated beta regression models. This accounts for the propensity of children to align at all (rate), the number of linguistic forms aligned on average when the children actually align (level), and exact repetitions, as a function of diagnostic group, visit, Vineland Socialization (VS), Mullen Expressive Language (MEL) and Visual Reception (MVR).
+
+# Results
+
+See table for details. Children in both groups consistently align their lexical and syntactic choices to their parents beyond the surrogate-pair baseline. The number of utterances with any form of alignment increases with age in both groups, albeit less so for children with ASD. Further, the actual number of linguistic forms aligned in those utterances decreases with age and more so in the TD children. This indicates that as they grow, children might engage more in their parents’ linguistic production by reusing their words and syntax, but they do so more flexibly and employ them in slightly different constructions (thus reducing the level of alignment).
+Verbal skills were positively related to alignment rate in both groups, but negatively to alignment level (for both groups on syntactic levels and only the ASD group for lexical levels). Socialization skills were positively related to lexical alignment rate for both groups, and to the increase in syntactic alignment rates for both groups. They were also strongly negatively related to syntactic alignment levels. No relation was found with MVR.
+
+```{r mytable, out.width='80%'}
+knitr::kable(iris[1:10, 1:4], caption = 'Table caption.',align = 'c',"html")
+```
+
+Or with figures: Figure \@ref(fig:standard-plot), or Figure \@ref(fig:morefigs).
+
+```{r standard-plot, out.width='80%', fig.align='center', fig.cap='Great figure!', fig.height=5}
+plot(mtcars[1:2])
+```
+
+```{r morefigs, out.width='80%', echo=TRUE, fig.cap='Amazing, right?!', fig.height=5}
+data <- iris
+
+plot(x = data$Sepal.Length, 
+     y = data$Sepal.Width, 
+     col = data$Species,
+     pch = 19, 
+     xlab = "Sepal Length (cm)",
+     ylab = "Sepal Width (cm)")
+
+```
+
+# Next Steps
+
+Aliquam sed faucibus risus, quis efficitur erat. Vestibulum semper mauris quis tempus eleifend. Aliquam sagittis dictum ipsum, quis viverra ligula eleifend ut. Curabitur sagittis vitae arcu eget faucibus. In non elementum felis. Duis et aliquam nunc. Nunc pulvinar sapien nunc, vel pretium nisi efficitur in. Fusce fringilla maximus leo et maximus. Fusce at ligula laoreet, iaculis mi at, auctor odio. Praesent sed elementum justo. Aenean consectetur risus rhoncus tincidunt efficitur. Praesent dictum mauris at diam maximus maximus [@R-posterdown].
+
+# Conclusion
+
+While the ability to align might be intact, we observe fewer and more rigid instances of spontaneous alignment modulated by both verbal and socialization skills.
+
+```{r, include=FALSE}
+knitr::write_bib(c('knitr','rmarkdown','posterdown','pagedown'), 'packages.bib')
+```
+
+# References

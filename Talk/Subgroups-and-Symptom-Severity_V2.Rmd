@@ -1,0 +1,197 @@
+---
+title: "Untitled"
+author: "Ethan Weed"
+date: "2/21/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r echo = F, results = 'hide', message=FALSE, warning = F}
+
+library(qgraph)
+library(igraph)
+library(tidyverse)
+
+rm(list = ls())
+
+# load and arrange data
+df <- read.csv("/Users/ethan/Documents/GitHub/ASD-voice/Paper/data/FullData2.csv")
+df_soc <- read.csv("/Users/ethan/Documents/GitHub/ASD-voice/data/Soc_Lang_Database.csv")
+
+
+df$DX <- ifelse(df$DX == 1, "TD", "ASD")
+d <- data.frame("utterance-dur" = df$utt_duration,
+                "H1H2_SD" = df$H1H2_SD,
+                "H1H2" = df$H1H2,
+                "articulation_rate" = df$articulation_rate)
+
+# re-arrange data so that participants are nodes (column headers)
+d <- t(d)
+colnames(d) <- df$ID
+d <- as.data.frame(d)
+d <- as.data.frame(scale(d))
+
+# graph the network of people
+g <-qgraph(cor(d), layout = "spring", repulsion = 5, graph = "pcor", threshold = .03, labels = FALSE, groups = as.factor(df$DX), DoNotPlot = TRUE, title = "DX - partial correlations")
+
+# convert to igraph object for detecting sub-groups
+gi <- as.igraph(g)
+
+# run sub-group detection
+set.seed(42)
+s <- spinglass.community(gi, spins = 10)
+
+# make data frame with person ID and sub-group membership for reference
+s2 <- data.frame("ID" = colnames(d),
+                 "Community" = s$membership)
+
+
+# make a data frame with subgroup membership and total SRS scores
+Sub_SRS <- s2
+Sub_SRS <- rename(Sub_SRS, Group = Community)
+Sub_SRS$Group <- factor(Sub_SRS$Group)
+Sub_SRS$SRS_total <- df_soc$SRS_Total_T
+Sub_SRS$Dx <- factor(df$DX)
+
+
+# plot the network, adding colors for the sub-groups found by detection algorithm
+
+# colorblind pallette colors for color-coordinating network, bar, and boxplots
+fill_colors <- c("#E69F00", "#009E73", "#F0E442", "#56B4E9")
+
+
+p1 <- qgraph(cor(d), layout = "spring", repulsion = 5, graph = "pcor", threshold = .03, labels = df$DX, groups = as.factor(s2$Community), color = fill_colors, DoNotPlot = FALSE, title = "A: Groups (spin-glass community detection)")
+
+
+plot(p1)
+
+# set up data for plotting bar graph
+data <- data.frame("Utterance_dur" = df$utt_duration,
+                "Articulation_rate" = df$articulation_rate,
+                "H1H2_SD" = df$H1H2_SD,
+                "H1H2" = df$H1H2)
+data <- as.data.frame(scale(data))
+
+data$Community <- s2$Community
+
+Com1 <- colMeans(subset(data, Community == 1))
+Com2 <- colMeans(subset(data, Community == 2))
+Com3 <- colMeans(subset(data, Community == 3))
+
+
+Community <- data.frame("SubGroup1" = Com1[1:5],
+                        "Subgroup2" = Com2[1:5],
+                        "Subgroup3" = Com3[1:5])
+
+
+C <- data.frame(t(Community))
+C$Subgroups <- as.factor(c("Group1", "Group2", "Group3"))
+C$Community <- NA
+
+library(reshape2)
+C2 <- melt(C)
+C2 <- rename(C2, Variable = variable)
+
+# save bar graph as g3 for easy calling below
+
+rect.1 <- data.frame(xmin = 0.5, xmax = 1.5, ymin = .75, ymax = 1)
+rect.2 <- data.frame(xmin = 1.5, xmax = 2.5, ymin = .75, ymax = 1)
+rect.3 <- data.frame(xmin = 2.5, xmax = 3.5, ymin = .75, ymax = 1)
+
+rect.1a <- data.frame(xmin = 0.5, xmax = 1.5, ymin = -1, ymax = .75)
+rect.2a <- data.frame(xmin = 1.5, xmax = 2.5, ymin = -1, ymax = .75)
+rect.3a <- data.frame(xmin = 2.5, xmax = 3.5, ymin = -1, ymax = .75)
+
+
+alpha_level <- 1
+outline <- 0
+outline2 <- 3 
+
+p2 <- ggplot(C2, aes(Subgroups, value)) +
+   geom_bar(aes(fill = Variable), position = "dodge", stat="identity") +
+   theme_classic() +
+   geom_rect(data = rect.1, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax), 
+             fill = fill_colors[1], 
+             alpha = alpha_level, 
+             col = "black", 
+             lty = outline, 
+             inherit.aes = F) +
+   geom_rect(data = rect.2, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax), 
+             fill = fill_colors[2], 
+             alpha = alpha_level, 
+             col = "black", 
+             lty = outline, 
+             inherit.aes = F) + 
+   geom_rect(data = rect.3, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax), 
+             fill = fill_colors[3], 
+             alpha = alpha_level, 
+             col = "black", 
+             lty = outline, 
+             inherit.aes = F) +
+   geom_rect(data = rect.1a, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax), 
+             fill = NA, 
+             alpha = alpha_level, 
+             col = "black", 
+             lty = outline2, 
+             inherit.aes = F) +
+   geom_rect(data = rect.2a, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax), 
+             fill = NA, 
+             alpha = alpha_level, 
+             col = "black", 
+             lty = outline2, 
+             inherit.aes = F) + 
+   geom_rect(data = rect.3a, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax), 
+             fill = NA, 
+             alpha = alpha_level, 
+             col = "black", 
+             lty = outline2, 
+             inherit.aes = F) +
+  annotate(geom="text", x=1, y=.85, label="Group 1",
+              color="black") +
+  annotate(geom="text", x=2, y=.85, label="Group 2",
+              color="black") +
+  annotate(geom="text", x=3, y=.85, label="Group 3",
+              color="black") +
+  theme(axis.text.x = element_blank(),
+        axis.ticks.x = element_blank()) +
+  labs(title = "B: Acoustic Features for Groups",
+        y = "z-score",
+        x = "")
+   
+
+
+plot(p2)
+
+
+# plot Groups and SRS scores
+p3 <- ggplot(Sub_SRS, aes(Group, SRS_total, fill = Group)) +
+  geom_boxplot(outlier.size = NULL) +
+  scale_fill_manual(values = fill_colors) +
+  guides(fill = FALSE) +
+  geom_point(aes(shape = Dx)) +
+  theme_classic() +
+  labs(title = "C: Total SRS Scores for Groups")
+
+
+
+plot(p3)
+
+
+```
+
+
+### Linear model: SRS predicted by Voice Group
+```{r warning = FALSE, message = FALSE}
+mod1 <- lm(data = Sub_SRS, SRS_total ~ Group)
+pander:: pander(anova(mod1))
+
+```
+
+### Tukey's HSD post-hoc comparisons
+```{r warning = FALSE, message = FALSE}
+a <- aov(data = Sub_SRS, SRS_total ~ Group)
+pander::pander(TukeyHSD(a))
+```

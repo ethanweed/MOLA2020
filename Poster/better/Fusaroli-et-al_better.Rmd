@@ -1,0 +1,114 @@
+---
+title: 
+author:
+  - name: Riccardo Fusaroli
+    affil: 1
+    orcid: '0000-0003-4775-5219'
+  - name: Ethan Weed
+    affil: 1
+    orcid: '0000-0002-3921-9101'
+  - name: Deborah Fein
+    affil: 2
+    orcid: '0000-0002-8478-5938'
+  - name: Letitia Naigles
+    affil: 2
+    orcid: '0000-0003-2168-9700'
+affiliation:
+  - num: 1
+    address: Aarhus University
+  - num: 2
+    address: University of Connecticut
+main_findings:
+  - "Lexical and Syntactic Alignment in is Intact but Atypical in the Spontaneous Speech of Children with ASD."
+  - '![](https://raw.githubusercontent.com/brentthorne/posterdown/master/images/betterhexlogo.png){.main_pic}'
+logoleft_name: '![](https://raw.githubusercontent.com/brentthorne/posterdown/master/images/qr-code-black.png){.main-img-left}'
+logoright_name: '![](https://raw.githubusercontent.com/brentthorne/posterdown/master/images/betterhexlogo.png){.main-img-right}'
+output: 
+  posterdown::posterdown_betterland:
+    self_contained: false
+    pandoc_args: --mathjax
+    highlight: haddock
+    number_sections: false
+link-citations: true
+bibliography: packages.bib
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(results = 'asis',
+                      echo = FALSE,
+                      warning = FALSE,
+                      tidy = FALSE,
+                      message = FALSE,
+                      fig.align = 'center',
+                      out.width = "100%")
+options(knitr.table.format = "html") 
+```
+
+```{r myplot, include=FALSE}
+svg('myplot.svg')
+plot(iris$Sepal.Length, iris$Sepal.Width)
+dev.off()
+```
+
+# Introduction
+
+Social impairment in ASD has been associated with an impaired ability and propensity to imitate others. However, the extent and form of impairment in imitation in ASD is still unclear. Here we focus on linguistic alignment: the tendency to re-use an interlocutor’s words (“mommy, give me the giraffe”, “is that a giraffe?”), and syntax (“the giraffe has fallen”, “yes and the elephant has gone to help her”). Previous studies indicated typical alignment in (low support needs) participants with ASD involved highly structured, task-oriented conversations. Given the centrality of alignment in establishing common ground and rapport in social interactions, we need to assess whether alignment is typical also in everyday unscripted conversations.
+
+
+```{r, include=FALSE}
+knitr::write_bib(c('posterdown', 'rmarkdown','pagedown'), 'packages.bib')
+```
+
+## Objectives
+
+1) the developmental trajectory of linguistic alignment in children with ASD and typically developing children during spontaneous parent-child interactions 
+2) whether the trajectory is affected by the clinical and cognitive features of the child.
+
+# Methods
+
+We analyzed spontaneous speech in 67 parent-child dyads from a longitudinal corpus (30 minutes of play activities, 6 visits over 2 years). We included 32 children diagnosed with ASD and 35 linguistically matched TD children (mean age at recruitment respectively 32.76 and 20.27 months). Alignment was calculated using the ALIGN Python library (Duran et al., 2019). We first contrasted child alignment in actual conversations with that in surrogate pairs formed by a parent and a child from two different dyads. We used Bayesian multilevel zero-and-one-inflated beta regression models. This accounts for the propensity of children to align at all (rate), the number of linguistic forms aligned on average when the children actually align (level), and exact repetitions, as a function of diagnostic group, visit, Vineland Socialization (VS), Mullen Expressive Language (MEL) and Visual Reception (MVR).
+
+**_Now on to the results!_**
+
+<br>
+
+# Results
+
+See table for details. Children in both groups consistently align their lexical and syntactic choices to their parents beyond the surrogate-pair baseline. The number of utterances with any form of alignment increases with age in both groups, albeit less so for children with ASD. Further, the actual number of linguistic forms aligned in those utterances decreases with age and more so in the TD children. This indicates that as they grow, children might engage more in their parents’ linguistic production by reusing their words and syntax, but they do so more flexibly and employ them in slightly different constructions (thus reducing the level of alignment).
+Verbal skills were positively related to alignment rate in both groups, but negatively to alignment level (for both groups on syntactic levels and only the ASD group for lexical levels). Socialization skills were positively related to lexical alignment rate for both groups, and to the increase in syntactic alignment rates for both groups. They were also strongly negatively related to syntactic alignment levels. No relation was found with MVR.
+
+```{r, irisfigure, fig.cap='Here is a caption for the figure. This can be added by using the "fig.cap" option in the r code chunk options, see this [link](https://yihui.name/knitr/options/#plots) from the legend himself, [Yihui Xie](https://twitter.com/xieyihui).', out.width="80%"}
+par(mar=c(2,2,0,1))
+plot(x = iris$Sepal.Length, y = iris$Sepal.Width,
+     col = iris$Species, pch = 19, xlab = "Sepal Length",
+     ylab = "Sepal Width")
+```
+
+Maybe you want to show off some of that fancy code you spent so much time on to make that figure, well you can do that too! Just use the `echo=TRUE` option in the r code chunk options, Figure \@ref(fig:myprettycode)!
+
+```{r myprettycode, echo=FALSE,collapse=TRUE, fig.cap='Boxplots, so hot right now!', fig.height=3.5, out.width="80%"}
+#trim whitespace
+par(mar=c(2,2,0,0))
+#plot boxplots
+boxplot(iris$Sepal.Width~iris$Species,
+        col = "#008080", 
+        border = "#0b4545",
+        ylab = "Sepal Width (cm)",
+        xlab = "Species")
+```
+
+How about a neat table of data? See, Table \@ref(tab:iristable):
+
+```{r, iristable}
+knitr::kable(
+  iris[1:8,1:5], format = "html",
+  caption = "A table made with the **knitr::kable** function.",
+  align = "c", col.names = c("Sepal <br> Length",
+                             "Sepal <br> Width",
+                             "Petal <br> Length",
+                             "Petal <br> Width",
+                             "Species"),
+  escape = FALSE)
+```
+
+# References

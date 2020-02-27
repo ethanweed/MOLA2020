@@ -1,0 +1,232 @@
+---
+date: "11/13/2019"
+output:
+  html_document:
+    code_folding: hide
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Symptom Severity and Acoustically-Identified Groups of Speakers with and without Autism Spectrum Disorder
+
+Ethan Weed, Riccardo Fusaroli, Jessica Mayo, Inge-Marie Eigsti
+
+## Background
+
+The speech of people with Autism Spectrum Disorder (ASD) has often been described as atypical, but there is little consensus on what acoustic features constitute the atypicality (Fusaroli et al., 2017). This raises the possibility that acoustically-different profiles of atypical speech may exist within ASD speech, as well as the possibility that these profiles may correspond to measures of symptom severity.
+
+##Objectives 
+
+Study goals were (1) to identify potential sub-groups of typical and atypical speakers, using acoustic features of prosody and voice, and (2) to investigate how acoustically-identified groups of speakers with and without ASD relate to symptom severity scores on the Social Responsiveness Scale (Constantino & Gruber, 2012).
+
+##Methods
+
+We analyzed speech recordings (8 scripted sentences per participant) from 15 adolescents diagnosed with ASD (mean(SD) age = 14.4 (1.48) years) with IQ scores in the typical range, and 15 adolescents with typical development (TD; mean(SD) age = 14.1(1.91) years); groups did not differ on chronological age or full-scale IQ. Participants in both the ASD and the NT groups demonstrated average to high average performance on standardized language measures (see Mayo, 2015, for details). From these speech recordings, we extracted acoustic measures of prosody and voice quality, and used a community-detection algorithm (Csardi, M. G.,2013; Reichardt & Bornholdt, 2006) to find groups of speakers who shared a common acoustic profile. We then compared these groups on the five subscales of the SRS.
+
+##Results
+
+The community-detection algorithm identified four groups of speakers whose acoustic profiles were more similar to each other than to members of the other groups (Figure 1). Groups 2 and 4 consisted primarily of TD participants (81%), and were distinguished acoustically by differences in speech rate and utterance duration. Groups 1 and 3, consisted primarily of ASD participants (79%), and were distinguished from each other primarily by diverging patterns of H1H2 (associated with breathiness), with group 3 showing higher mean H1H2 and variation in H1H2, and group 1 showing lower mean H1H2, than any other group. These four groups were significantly related to performance on all the SRS subscales and on total SRS score (F(3, 25) = 6.31, p = 0.00245, with groups 1 and 3 rating higher on all SRS subscales than groups 2 and 4 (Figure 2). Group 3 in particular was distinguished by a slower speech rate, longer utterances, and a higher variation of breathiness.
+
+```{r echo = T, results = 'hide', message=FALSE, warning = F}
+
+library(qgraph)
+library(igraph)
+library(tidyverse)
+
+rm(list = ls())
+
+# load and arrange data
+df <- read.csv("/Users/ethan/Documents/GitHub/ASD-voice/Paper/data/FullData2.csv")
+df_soc <- read.csv("/Users/ethan/Documents/GitHub/ASD-voice/data/Soc_Lang_Database.csv")
+
+
+df$DX <- ifelse(df$DX == 1, "TD", "ASD")
+d <- data.frame("speech_rate" = df$speech_rate,
+                "H1H2_SD" = df$H1H2_SD,
+                "H1H2" = df$H1H2,
+                "articulation_rate" = df$articulation_rate)
+
+# re-arrange data so that participants are nodes (column headers)
+d <- t(d)
+colnames(d) <- df$ID
+d <- as.data.frame(d)
+d <- as.data.frame(scale(d))
+
+# graph the network of people
+g <-qgraph(cor(d), layout = "spring", repulsion = 5, graph = "pcor", threshold = .03, labels = FALSE, groups = as.factor(df$DX), DoNotPlot = TRUE, title = "DX - partial correlations")
+
+# convert to igraph object for detecting sub-groups
+gi <- as.igraph(g)
+
+# run sub-group detection
+set.seed(42)
+s <- spinglass.community(gi, spins = 10)
+
+# make data frame with person ID and sub-group membership for reference
+s2 <- data.frame("ID" = colnames(d),
+                 "Community" = s$membership)
+
+
+# make a data frame with subgroup membership and total SRS scores
+Sub_SRS <- s2
+Sub_SRS <- rename(Sub_SRS, Group = Community)
+Sub_SRS$Group <- factor(Sub_SRS$Group)
+Sub_SRS$SRS_total <- df_soc$SRS_Total_T
+Sub_SRS$Dx <- factor(df$DX)
+
+
+# plot the network, adding colors for the sub-groups found by detection algorithm
+
+# colorblind pallette colors for color-coordinating network, bar, and boxplots
+fill_colors <- c("#E69F00", "#009E73", "#F0E442", "#56B4E9")
+
+
+p1 <- qgraph(cor(d), layout = "spring", repulsion = 5, graph = "pcor", threshold = .03, labels = df$DX, groups = as.factor(s2$Community), color = fill_colors, DoNotPlot = FALSE, title = "A: Groups (spin-glass community detection)")
+
+# make hi-res version of plot 1
+pdf("/Users/ethan/Documents/GitHub/ASD-voice/MOLA2020_abstracts/sub-group-graph.pdf")
+plot(p1)
+dev.off()
+
+plot(p1)
+
+# set up data for plotting bar graph
+data <- data.frame("Articulation_rate" = df$articulation_rate,
+                "Speech_rate" = df$speech_rate,
+                "H1H2_SD" = df$H1H2_SD,
+                "H1H2" = df$H1H2)
+data <- as.data.frame(scale(data))
+
+data$Community <- s2$Community
+
+Com1 <- colMeans(subset(data, Community == 1))
+Com2 <- colMeans(subset(data, Community == 2))
+Com3 <- colMeans(subset(data, Community == 3))
+
+
+Community <- data.frame("SubGroup1" = Com1[1:5],
+                        "Subgroup2" = Com2[1:5],
+                        "Subgroup3" = Com3[1:5])
+
+
+C <- data.frame(t(Community))
+C$Subgroups <- as.factor(c("Group1", "Group2", "Group3"))
+C$Community <- NA
+
+library(reshape2)
+C2 <- melt(C)
+C2 <- rename(C2, Variable = variable)
+
+# save bar graph as g3 for easy calling below
+
+rect.1 <- data.frame(xmin = 0.5, xmax = 1.5, ymin = .75, ymax = 1)
+rect.2 <- data.frame(xmin = 1.5, xmax = 2.5, ymin = .75, ymax = 1)
+rect.3 <- data.frame(xmin = 2.5, xmax = 3.5, ymin = .75, ymax = 1)
+
+rect.1a <- data.frame(xmin = 0.5, xmax = 1.5, ymin = -1, ymax = .75)
+rect.2a <- data.frame(xmin = 1.5, xmax = 2.5, ymin = -1, ymax = .75)
+rect.3a <- data.frame(xmin = 2.5, xmax = 3.5, ymin = -1, ymax = .75)
+
+
+alpha_level <- 1
+outline <- 0
+outline2 <- 3 
+
+p2 <- ggplot(C2, aes(Subgroups, value)) +
+   geom_bar(aes(fill = Variable), position = "dodge", stat="identity") +
+   theme_classic() +
+   geom_rect(data = rect.1, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax), 
+             fill = fill_colors[1], 
+             alpha = alpha_level, 
+             col = "black", 
+             lty = outline, 
+             inherit.aes = F) +
+   geom_rect(data = rect.2, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax), 
+             fill = fill_colors[2], 
+             alpha = alpha_level, 
+             col = "black", 
+             lty = outline, 
+             inherit.aes = F) + 
+   geom_rect(data = rect.3, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax), 
+             fill = fill_colors[3], 
+             alpha = alpha_level, 
+             col = "black", 
+             lty = outline, 
+             inherit.aes = F) +
+   geom_rect(data = rect.1a, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax), 
+             fill = NA, 
+             alpha = alpha_level, 
+             col = "black", 
+             lty = outline2, 
+             inherit.aes = F) +
+   geom_rect(data = rect.2a, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax), 
+             fill = NA, 
+             alpha = alpha_level, 
+             col = "black", 
+             lty = outline2, 
+             inherit.aes = F) + 
+   geom_rect(data = rect.3a, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax), 
+             fill = NA, 
+             alpha = alpha_level, 
+             col = "black", 
+             lty = outline2, 
+             inherit.aes = F) +
+  annotate(geom="text", x=1, y=.85, label="Group 1",
+              color="black") +
+  annotate(geom="text", x=2, y=.85, label="Group 2",
+              color="black") +
+  annotate(geom="text", x=3, y=.85, label="Group 3",
+              color="black") +
+  theme(axis.text.x = element_blank(),
+        axis.ticks.x = element_blank()) +
+  labs(title = "B: Acoustic Features for Groups",
+        y = "z-score",
+        x = "")
+   
+
+# make hi-res version of plot 2
+pdf("/Users/ethan/Documents/GitHub/ASD-voice/MOLA2020_abstracts/Acoustic-features.pdf")
+plot(p2)
+dev.off()
+
+plot(p2)
+
+
+# plot Groups and SRS scores
+p3 <- ggplot(Sub_SRS, aes(Group, SRS_total, fill = Group)) +
+  geom_boxplot(outlier.size = NULL) +
+  scale_fill_manual(values = fill_colors) +
+  guides(fill = FALSE) +
+  geom_point(aes(shape = Dx)) +
+  geom_label(label = Sub_SRS$ID, position = "jitter") +
+  theme_classic() +
+  labs(title = "C: Total SRS Scores for Groups")
+
+# make hi-res version of plot 3
+pdf("/Users/ethan/Documents/GitHub/ASD-voice/MOLA2020_abstracts/SRS.pdf")
+plot(p3)
+dev.off()
+
+plot(p3)
+
+```
+
+### Linear model: SRS predicted by Voice Group
+```{r warning = FALSE, message = FALSE}
+mod1 <- lm(data = Sub_SRS, SRS_total ~ Group)
+pander:: pander(anova(mod1))
+
+```
+
+### Tukey's HSD post-hoc comparisons
+```{r warning = FALSE, message = FALSE}
+a <- aov(data = Sub_SRS, SRS_total ~ Group)
+pander::pander(TukeyHSD(a))
+```
+
+
+##Conclusions
+
+We identified three acoustic profiles among the speakers, and these profiles significantly predicted scores on the SRS subscales (F(2,26) = 6.8, p = 0.004). Individuals in Voice Groups 1 and 2 had significantly higher SRS total scores than individuals in Voice Group 3 (post-hoc Tukey's HSD, Group 3-1: p = 0.007, Group 3-2: p = 0.023). Group 1 was distinguished primarily by rythmic factors: a high articulation rate and relatively slower speech rate. This may be perceived as quick bursts of syllables, separated by longer pauses. Group 2 was distinguished primarily by voice quality factors: a low average amount of breathiness, but a high variation in breathiness. This may be perceived as an overall unsteadiness of the voice. Group 3 primarily by a higher overall amount of breathiness, together with a lower variation in breathiness, as well as a more even speech rate overall. It is likely that these acoustic measures contribute to community perceptions of atypicality (Sasson et al, 2017) and ASD “frankness” (de Marchena & Miller, 2016). Results provide a foundation for exploration of how (and whether) to intervene with prosodic and other speech qualities.
