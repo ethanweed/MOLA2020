@@ -22,9 +22,21 @@ affiliation:
   - num: 2
     address: University of Connecticut
 column_numbers: 3
-logoright_name: https&#58;//raw.githubusercontent.com/brentthorne/posterdown/master/images/betterhexlogo.png
-logoleft_name: https&#58;//raw.githubusercontent.com/brentthorne/posterdown/master/images/betterhexlogo.png
-primary_colour: \#A5B1D8
+#logoright_name: https&#58;//raw.githubusercontent.com/brentthorne/posterdown/master/images/betterhexlogo.png
+#logoleft_name: https&#58;//raw.githubusercontent.com/brentthorne/posterdown/master/images/betterhexlogo.png
+
+# colors:
+  # \#7F6024
+  # \#A5B1D8
+  # \#8FA2DF
+
+body_bgcol: #E6ECF7
+
+primary_colour: \#B7802A
+secondary_colour: \#EDEEC6
+accent_colour: \#EDEEC6
+title_textcol: \#E7F2FA
+sectitle_textcol: \#E7F2FA
 
 
 output: 
@@ -67,13 +79,15 @@ cb <- function(x) {
 # What is Conversational Alignment?
 
 ```{r echo=FALSE, fig.cap = "Edmund C. Tarbell, \"Marjorie and Little Edmund\"",  out.width= "100%", out.height= "100%", fig.align="left"}
-knitr::include_graphics("Cosine-similarity_lores.jpg")
+knitr::include_graphics("Cosine-similarity-vert.jpg")
 ```
 
 
 
 
-# Do Children Align?
+# Do Children Align?  
+  
+  
 ```{r table1, message=FALSE, warning = F, out.width='100%'}
 
 caption = "Alignment Rate: Do Children Align?"
