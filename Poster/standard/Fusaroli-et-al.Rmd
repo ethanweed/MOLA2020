@@ -1,4 +1,7 @@
 ---
+poster_height: "36in" # height in inches of poster
+poster_width: "48in" # width in inches of poster
+font_size: "30pt" #please see github.com/brentthorne/posterdown for compatible options.
 title: Intact but Atypical Lexical and Syntactic Alignment in Spontaneous Speech of Children with Autism Spectrum Disorder
 author:
   - name: Riccardo Fusaroli
@@ -21,6 +24,9 @@ affiliation:
 column_numbers: 3
 logoright_name: https&#58;//raw.githubusercontent.com/brentthorne/posterdown/master/images/betterhexlogo.png
 logoleft_name: https&#58;//raw.githubusercontent.com/brentthorne/posterdown/master/images/betterhexlogo.png
+primary_colour: \#ADBCE3
+title_textcol: \#96731A
+sectitle_textcol: \#96731A
 output: 
   posterdown::posterdown_html:
     self_contained: false
@@ -58,24 +64,24 @@ cb <- function(x) {
 ```
 
 
-# Introduction
+# What is Conversational Alignment?
 
-Social impairment in ASD has been associated with an impaired ability and propensity to imitate others. However, the extent and form of impairment in imitation in ASD is still unclear. Here we focus on linguistic alignment: the tendency to re-use an interlocutor’s words (“mommy, give me the giraffe”, “is that a giraffe?”), and syntax (“the giraffe has fallen”, “yes and the elephant has gone to help her”). Previous studies indicated typical alignment in (low support needs) participants with ASD involved highly structured, task-oriented conversations. Given the centrality of alignment in establishing common ground and rapport in social interactions, we need to assess whether alignment is typical also in everyday unscripted conversations.
+```{r echo=FALSE, fig.cap = "Edmund C. Tarbell, \"Marjorie and Little Edmund\"",  out.width= "100%", out.height= "100%", fig.align="left"}
+knitr::include_graphics("Cosine-similarity.pdf")
+```
 
-## Objectives
 
-We investigated 
-1) the developmental trajectory of linguistic alignment in children with ASD and typically developing children during spontaneous parent-child interactions 
-2) whether the trajectory is affected by the clinical and cognitive features of the child.
 
-# Methods
 
-We analyzed spontaneous speech in 67 parent-child dyads from a longitudinal corpus (30 minutes of play activities, 6 visits over 2 years). We included 32 children diagnosed with ASD and 35 linguistically matched TD children (mean age at recruitment respectively 32.76 and 20.27 months). Alignment was calculated using the ALIGN Python library (Duran et al., 2019). We first contrasted child alignment in actual conversations with that in surrogate pairs formed by a parent and a child from two different dyads. We used Bayesian multilevel zero-and-one-inflated beta regression models. This accounts for the propensity of children to align at all (rate), the number of linguistic forms aligned on average when the children actually align (level), and exact repetitions, as a function of diagnostic group, visit, Vineland Socialization (VS), Mullen Expressive Language (MEL) and Visual Reception (MVR).
 
-# Results
 
-See table for details. Children in both groups consistently align their lexical and syntactic choices to their parents beyond the surrogate-pair baseline. The number of utterances with any form of alignment increases with age in both groups, albeit less so for children with ASD. 
 
+
+
+
+
+
+# Do Children Align?
 ```{r table1, message=FALSE, warning = F, out.width='100%'}
 
 caption = "Alignment Rate: Do Children Align?"
@@ -94,10 +100,8 @@ t1 %>%
 ```
 
 
-Further, the actual number of linguistic forms aligned in those utterances decreases with age and more so in the TD children. This indicates that as they grow, children might engage more in their parents’ linguistic production by reusing their words and syntax, but they do so more flexibly and employ them in slightly different constructions (thus reducing the level of alignment). Verbal skills were positively related to alignment rate in both groups, but negatively to alignment level (for both groups on syntactic levels and only the ASD group for lexical levels). Socialization skills were positively related to lexical alignment rate for both groups, and to the increase in syntactic alignment rates for both groups. They were also strongly negatively related to syntactic alignment levels. No relation was found with MVR.
 
-
-
+# How Much do Children Align?
 ```{r table2, out.width='80%'}
 
 
@@ -118,7 +122,7 @@ t2 %>%
 
 
 
-
+# How Much of Children's Alignment is Exact Repetition?
 
 ```{r table3, out.width='80%'}
 
@@ -143,7 +147,7 @@ t3 %>%
 
 # Conclusion
 
-While the ability to align might be intact, we observe fewer and more rigid instances of spontaneous alignment modulated by both verbal and socialization skills.
+
 
 ```{r, include=FALSE}
 knitr::write_bib(c('knitr','rmarkdown','posterdown','pagedown'), 'packages.bib')

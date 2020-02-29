@@ -27,36 +27,36 @@ Google fonts api stuff
 
 <style>
 @page {
-size: 45in 38in;
+size: 48in 36in;
 margin: 0;
 padding: 0;
 }
 body {
 margin: 0;
 font-size: 45px;
-width: 45in;
-height: 38in;
+width: 48in;
+height: 36in;
 padding: 0;
 text-align: justify;
 font-family: Palatino;
 }
 .poster_wrap {
-width: 45in;
-height: 38in;
+width: 48in;
+height: 36in;
 padding: 0cm;
 }
 .title_container {
-width: 45in;
-height: calc(38in * 0.15);
+width: 48in;
+height: calc(36in * 0.15);
 overflow: hidden;
-background-color: #0b4545;
+background-color: #ADBCE3;
 border: 0 solid #0b4545;
 }
 .logo_left {
 float: left;
 width: 10%;
 height: 100%;
-background-color: #0b4545;
+background-color: #ADBCE3;
 display: flex;
 align-items: center;
 justify-content: center;
@@ -65,7 +65,7 @@ justify-content: center;
 float: right;
 width: 10%;
 height: 100%;
-background-color: #0b4545;
+background-color: #ADBCE3;
 display: flex;
 align-items: center;
 justify-content: center;
@@ -76,7 +76,7 @@ position: relative;
 float: left;
 width: 80%;
 height: 100%;
-color: #FFFFFF;
+color: #96731A;
 top: 50%;
 transform: translateY(-50%);
 -webkit-transform: translateY(-50%);
@@ -118,9 +118,9 @@ column-rule-width: 1mm;
 -webkit-column-rule-style: dashed;
 -moz-column-rule-style: dashed;
 column-rule-style: dashed;
--webkit-column-rule-color: #0b4545;
--moz-column-rule-color: #0b4545;
-column-rule-color: #0b4545;
+-webkit-column-rule-color: #ADBCE3;
+-moz-column-rule-color: #ADBCE3;
+column-rule-color: #ADBCE3;
 column-gap: 1em;
 padding-left: 0.5em;
 padding-right: 0.5em;
@@ -135,10 +135,10 @@ border: 0;
 font-weight: normal;
 }
 .poster_body_wrap{
-width: calc(45in + 0 + 0);
-height: calc(38in * 0.83);
-padding-top: calc(38in * 0.005);
-padding-bottom: calc(38in * 0.01);
+width: calc(48in + 0 + 0);
+height: calc(36in * 0.83);
+padding-top: calc(36in * 0.005);
+padding-bottom: calc(36in * 0.01);
 background-color: #ffffff;
 }
 .poster_title h3 {
@@ -168,10 +168,10 @@ margin-bottom: 0;
 }
 .poster_body h1 {
 text-align: center;
-color: #FFFFFF;
+color: #96731A;
 font-size: 65pt;
-border: 2mm solid #0b4545;
-background-color: #0b4545;
+border: 2mm solid #ADBCE3;
+background-color: #ADBCE3;
 border-radius: 4mm 0mm;
 margin-top: 2mm;
 margin-bottom: 2mm;
@@ -224,7 +224,7 @@ code {
 font-size: 1em;
 font-family: monospace;
 background-color: #00808024;
-color: #0b4545;
+color: #ADBCE3;
 padding: 1.2mm;
 border-radius: 2mm;
 }
@@ -294,21 +294,17 @@ font-size: 20pt;
 
 <div class='poster_body_wrap'>
 <div class='poster_body'>
-<div id="introduction" class="section level1">
-<h1>Introduction</h1>
-<p>Social impairment in ASD has been associated with an impaired ability and propensity to imitate others. However, the extent and form of impairment in imitation in ASD is still unclear. Here we focus on linguistic alignment: the tendency to re-use an interlocutor’s words (“mommy, give me the giraffe”, “is that a giraffe?”), and syntax (“the giraffe has fallen”, “yes and the elephant has gone to help her”). Previous studies indicated typical alignment in (low support needs) participants with ASD involved highly structured, task-oriented conversations. Given the centrality of alignment in establishing common ground and rapport in social interactions, we need to assess whether alignment is typical also in everyday unscripted conversations.</p>
-<div id="objectives" class="section level2">
-<h2>Objectives</h2>
-<p>We investigated 1) the developmental trajectory of linguistic alignment in children with ASD and typically developing children during spontaneous parent-child interactions 2) whether the trajectory is affected by the clinical and cognitive features of the child.</p>
+<div id="what-is-conversational-alignment" class="section level1">
+<h1>What is Conversational Alignment?</h1>
+<div class="figure" style="text-align: left"><span id="fig:unnamed-chunk-1"></span>
+<img src="Cosine-similarity.pdf" alt="Edmund C. Tarbell, &quot;Marjorie and Little Edmund&quot;" width="100%" height="100%" />
+<p class="caption">
+Figure 1: Edmund C. Tarbell, “Marjorie and Little Edmund”
+</p>
 </div>
 </div>
-<div id="methods" class="section level1">
-<h1>Methods</h1>
-<p>We analyzed spontaneous speech in 67 parent-child dyads from a longitudinal corpus (30 minutes of play activities, 6 visits over 2 years). We included 32 children diagnosed with ASD and 35 linguistically matched TD children (mean age at recruitment respectively 32.76 and 20.27 months). Alignment was calculated using the ALIGN Python library (Duran et al., 2019). We first contrasted child alignment in actual conversations with that in surrogate pairs formed by a parent and a child from two different dyads. We used Bayesian multilevel zero-and-one-inflated beta regression models. This accounts for the propensity of children to align at all (rate), the number of linguistic forms aligned on average when the children actually align (level), and exact repetitions, as a function of diagnostic group, visit, Vineland Socialization (VS), Mullen Expressive Language (MEL) and Visual Reception (MVR).</p>
-</div>
-<div id="results" class="section level1">
-<h1>Results</h1>
-<p>See table for details. Children in both groups consistently align their lexical and syntactic choices to their parents beyond the surrogate-pair baseline. The number of utterances with any form of alignment increases with age in both groups, albeit less so for children with ASD.</p>
+<div id="do-children-align" class="section level1">
+<h1>Do Children Align?</h1>
 <table>
 <caption>
 <span id="tab:table1">Table 1: </span>Alignment Rate: Do Children Align?
@@ -439,7 +435,9 @@ MEL * ASD * Visit
 </tr>
 </tbody>
 </table>
-<p>Further, the actual number of linguistic forms aligned in those utterances decreases with age and more so in the TD children. This indicates that as they grow, children might engage more in their parents’ linguistic production by reusing their words and syntax, but they do so more flexibly and employ them in slightly different constructions (thus reducing the level of alignment). Verbal skills were positively related to alignment rate in both groups, but negatively to alignment level (for both groups on syntactic levels and only the ASD group for lexical levels). Socialization skills were positively related to lexical alignment rate for both groups, and to the increase in syntactic alignment rates for both groups. They were also strongly negatively related to syntactic alignment levels. No relation was found with MVR.</p>
+</div>
+<div id="how-much-do-children-align" class="section level1">
+<h1>How Much do Children Align?</h1>
 <table>
 <caption>
 <span id="tab:table2">Table 2: </span>Alignment Level: How Much Do Children Align?
@@ -581,6 +579,9 @@ MEL * ASD * Visit
 </tr>
 </tbody>
 </table>
+</div>
+<div id="how-much-of-childrens-alignment-is-exact-repetition" class="section level1">
+<h1>How Much of Children’s Alignment is Exact Repetition?</h1>
 <table>
 <caption>
 <span id="tab:table3">Table 3: </span>Exact Repetitions
@@ -728,7 +729,6 @@ MEL * ASD * Visit
 </div>
 <div id="conclusion" class="section level1">
 <h1>Conclusion</h1>
-<p>While the ability to align might be intact, we observe fewer and more rigid instances of spontaneous alignment modulated by both verbal and socialization skills.</p>
 </div>
 <div id="references" class="section level1">
 <h1>References</h1>

@@ -86,7 +86,7 @@ fill_colors <- c("#E69F00", "#009E73", "#F0E442", "#56B4E9")
 p1 <- qgraph(cor(d), layout = "spring", repulsion = 5, graph = "pcor", threshold = .03, labels = df$DX, groups = as.factor(s2$Community), color = fill_colors, DoNotPlot = FALSE, title = "A: Groups (spin-glass community detection)")
 
 # make hi-res version of plot 1
-pdf("/Users/ethan/Documents/GitHub/ASD-voice/MOLA2020_abstracts/sub-group-graph.pdf")
+pdf("//Users/ethan/Documents/GitHub/MOLA2020/Talk/sub-group-graph.pdf")
 plot(p1)
 dev.off()
 
@@ -187,7 +187,7 @@ p2 <- ggplot(C2, aes(Subgroups, value)) +
    
 
 # make hi-res version of plot 2
-pdf("/Users/ethan/Documents/GitHub/ASD-voice/MOLA2020_abstracts/Acoustic-features.pdf")
+pdf("/Users/ethan/Documents/GitHub/MOLA2020/Talk/Acoustic-features.pdf")
 plot(p2)
 dev.off()
 
@@ -205,7 +205,7 @@ p3 <- ggplot(Sub_SRS, aes(Group, SRS_total, fill = Group)) +
   labs(title = "C: Total SRS Scores for Groups")
 
 # make hi-res version of plot 3
-pdf("/Users/ethan/Documents/GitHub/ASD-voice/MOLA2020_abstracts/SRS.pdf")
+pdf("/Users/ethan/Documents/GitHub/MOLA2020/Talk/SRS.pdf")
 plot(p3)
 dev.off()
 
