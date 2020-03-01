@@ -58,12 +58,14 @@ knitr::opts_chunk$set(echo = FALSE)
 ```
 
 ```{r libraries}
-pacman::p_load("dplyr", "kableExtra")
+pacman::p_load("dplyr", "kableExtra", "tidyverse")
 ```
 
 
 ```{r colorbar, echo=FALSE}
 # colorbar function copied from: https://stackoverflow.com/questions/49916591/how-to-reverse-only-one-bar-in-one-cell-if-the-value-is-negative-with-kableextra
+
+# probably get rid of this, but leave it in for now, just in case I want to go back to tables with colorbars
 cb <- function(x) {
   range <- max(abs(x))
   width <- round(abs(x / range * 50), 2)
@@ -81,6 +83,29 @@ cb <- function(x) {
     )
   )
 }
+
+
+# function for making bar-plots out of table data
+
+barcolor1 <- "#8FA2DF"
+barcolor2 <- "#EDEEC6"
+
+bp <- function(t, title){
+  t$Predictors <- factor(t1$Predictors, levels = t1$Predictors)
+  t$Predictors <- fct_rev(t$Predictors)
+  t <- gather(t, key = "Type", value = "LogOdds", -Predictors)
+
+    ggplot(t, aes(t$Predictors, LogOdds)) +
+    geom_bar(aes(fill = Type), position = "dodge", stat="identity") +
+    coord_flip() +
+    #scale_fill_brewer(palette = "Dark2") +
+    scale_fill_manual("legend", values = c("Lexical" = barcolor1, "Syntactic" = barcolor2)) +
+    theme_classic() +
+    labs( y = "Beta (Log Odds)",
+          x = "Predictors", 
+          title = title)
+}
+
 ```
 
 
@@ -96,20 +121,38 @@ knitr::include_graphics("Cosine-similarity-vert.jpg")
 # Do Children Align?  
   
   
-```{r table1, message=FALSE, warning = F, out.width='100%'}
+```{r table1, fig.cap = "Alignment Rate: Do Children Align?", message=FALSE, warning = F, out.width='100%'}
 
-caption = "Alignment Rate: Do Children Align?"
 
 t1 <- read.csv("/Users/ethan/Documents/GitHub/MOLA2020/Poster/Table1a.csv")
 
-t1 %>%
-  mutate(
-    Lexical = cb(Lexical),
-    Syntactic = cb(Syntactic)
-  ) %>%
-  knitr::kable(escape = F, caption = caption, booktabs = FALSE, align = "l")
+bp(t1, "")
+
+########################## for making tables with colorbars; probably get rid of this: too unclear
+#t1 %>%
+#  mutate(
+#    Lexical = cb(Lexical),
+#    Syntactic = cb(Syntactic)
+#  ) %>%
+#  knitr::kable(escape = F, caption = caption, booktabs = FALSE, align = "l")
 
 #kable(t1, "html", align = "c", caption = "Alignment Rate: Do Children Align?", booktabs = T)
+
+```
+
+
+
+```{r}
+
+
+t1 <- read.csv("/Users/ethan/Documents/GitHub/MOLA2020/Poster/Table1a.csv")
+
+
+
+
+
+
+
 
 ```
 
