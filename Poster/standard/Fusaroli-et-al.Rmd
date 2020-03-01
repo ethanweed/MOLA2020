@@ -29,14 +29,22 @@ column_numbers: 3
   # \#7F6024
   # \#A5B1D8
   # \#8FA2DF
+  # \#E6ECF7
+  # \#E6ECF7  
+  # orange from cosine figure: #47A2F1
+  # blue from cosine figure: #FFA35F
+  # darkish blue: \#8FA2DF
+  # bronze color from painting: \#B7802A
+  # corn yellow color from painting: \#EDEEC6
+  # very pale blue from painting: \#F0F8FF
 
-body_bgcol: #E6ECF7
+# body_bgcol: \#8FA2DF
 
 primary_colour: \#B7802A
-secondary_colour: \#EDEEC6
-accent_colour: \#EDEEC6
-title_textcol: \#E7F2FA
-sectitle_textcol: \#E7F2FA
+secondary_colour: \#F0F8FF
+accent_colour: \#E7F2FA
+title_textcol: \#F0F8FF
+sectitle_textcol: \#F0F8FF
 
 
 output: 
@@ -63,12 +71,12 @@ cb <- function(x) {
     x > 0,
     paste0(
       '<span style="display: inline-block; border-radius: 2px; ', 
-      'padding-right: 2px; background-color: lightgreen; width: ', 
+      'padding-right: 2px; background-color: #FFD700; width: ', 
       width, '%; margin-left: 50%; text-align: right;">', x, '</span>'
     ),
     paste0(
       '<span style="display: inline-block; border-radius: 2px; ', 
-      'padding-right: 2px; background-color: lightpink; width: ', 
+      'padding-right: 2px; background-color: #F0F8FF; width: ', 
       width, '%; margin-right: 50%; text-align: right; float: right; ">', x, '</span>'
     )
   )
@@ -78,7 +86,7 @@ cb <- function(x) {
 
 # What is Conversational Alignment?
 
-```{r echo=FALSE, fig.cap = "Edmund C. Tarbell, \"Marjorie and Little Edmund\"",  out.width= "100%", out.height= "100%", fig.align="left"}
+```{r echo=FALSE, fig.cap = "Edmund C. Tarbell, \"Marjorie and Little Edmund\"",  out.width= "95%", out.height= "95%", fig.align="center"}
 knitr::include_graphics("Cosine-similarity-vert.jpg")
 ```
 
