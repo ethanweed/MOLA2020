@@ -37,13 +37,18 @@ column_numbers: 3
   # bronze color from painting: \#B7802A
   # corn yellow color from painting: \#EDEEC6
   # very pale blue from painting: \#F0F8FF
+  # golden hue from grass in painting: \#D8B743
 
 # body_bgcol: \#8FA2DF
 
 primary_colour: \#B7802A
 secondary_colour: \#F0F8FF
 accent_colour: \#E7F2FA
+
 title_textcol: \#F0F8FF
+affiliation_textsize: "25pt"
+
+sectitle_bgcol: \#8FA2DF
 sectitle_textcol: \#F0F8FF
 
 
@@ -63,6 +68,9 @@ pacman::p_load("dplyr", "kableExtra", "tidyverse")
 
 
 ```{r colorbar, echo=FALSE}
+# for rendering pdf
+#pagedown::chrome_print("/Users/ethan/Documents/GitHub/MOLA2020/Poster/standard/Fusaroli-et-al.Rmd")
+
 # colorbar function copied from: https://stackoverflow.com/questions/49916591/how-to-reverse-only-one-bar-in-one-cell-if-the-value-is-negative-with-kableextra
 
 # probably get rid of this, but leave it in for now, just in case I want to go back to tables with colorbars
@@ -88,10 +96,10 @@ cb <- function(x) {
 # function for making bar-plots out of table data
 
 barcolor1 <- "#8FA2DF"
-barcolor2 <- "#EDEEC6"
+barcolor2 <- "#D8B743"
 
 bp <- function(t, title){
-  t$Predictors <- factor(t1$Predictors, levels = t1$Predictors)
+  t$Predictors <- factor(t$Predictors, levels = t$Predictors)
   t$Predictors <- fct_rev(t$Predictors)
   t <- gather(t, key = "Type", value = "LogOdds", -Predictors)
 
@@ -121,7 +129,7 @@ knitr::include_graphics("Cosine-similarity-vert.jpg")
 # Do Children Align?  
   
   
-```{r table1, fig.cap = "Alignment Rate: Do Children Align?", message=FALSE, warning = F, out.width='100%'}
+```{r fig1, fig.cap = "Alignment Rate: Do Children Align?", message=FALSE, warning = F, out.width='100%'}
 
 
 t1 <- read.csv("/Users/ethan/Documents/GitHub/MOLA2020/Poster/Table1a.csv")
@@ -142,36 +150,13 @@ bp(t1, "")
 
 
 
-```{r}
-
-
-t1 <- read.csv("/Users/ethan/Documents/GitHub/MOLA2020/Poster/Table1a.csv")
-
-
-
-
-
-
-
-
-```
-
-
-
 # How Much do Children Align?
-```{r table2, out.width='80%'}
+```{r fig2, fig.cap = "Alignment Rate: Do Children Align?", out.width='80%'}
 
-
-caption = "Alignment Level: How Much Do Children Align?"
 
 t2 <- read.csv("/Users/ethan/Documents/GitHub/MOLA2020/Poster/Table2a.csv")
 
-t2 %>%
-  mutate(
-    Lexical = cb(Lexical),
-    Syntactic = cb(Syntactic)
-  ) %>%
-  knitr::kable(escape = F, caption = caption, booktabs = FALSE, align = "l")
+bp(t2, "")
 
 ```
 
@@ -181,19 +166,12 @@ t2 %>%
 
 # How Much of Children's Alignment is Exact Repetition?
 
-```{r table3, out.width='80%'}
+```{r fig3, fig.cap = "Exact Repetitions", out.width='80%'}
 
-
-caption = "Exact Repetitions"
 
 t3 <- read.csv("/Users/ethan/Documents/GitHub/MOLA2020/Poster/Table3a.csv")
 
-t3 %>%
-  mutate(
-    Lexical = cb(Lexical),
-    Syntactic = cb(Syntactic)
-  ) %>%
-  knitr::kable(escape = F, caption = caption, booktabs = FALSE, align = "l")
+bp(t3, "")
 
 ```
 
