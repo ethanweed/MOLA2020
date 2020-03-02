@@ -98,10 +98,9 @@ cb <- function(x) {
 barcolor1 <- "#8FA2DF"
 barcolor2 <- "#D8B743"
 
-# Create a text grob
-tgrob <- text_grob(text, face = "plain", color = "black", just = "left")
-# Draw the text
-#as_ggplot(tgrob)
+t1 <- read.csv("/Users/ethan/Documents/GitHub/MOLA2020/Poster/Table1a.csv")
+t2 <- read.csv("/Users/ethan/Documents/GitHub/MOLA2020/Poster/Table2a.csv")
+t3 <- read.csv("/Users/ethan/Documents/GitHub/MOLA2020/Poster/Table3a.csv")
 
 bp <- function(t, title){
   t$Predictors <- factor(t$Predictors, levels = t$Predictors)
@@ -138,15 +137,19 @@ knitr::include_graphics("Cosine-similarity-vert.jpg")
 
 
 # What Predicts Whether Children Align?  
+Older children align more often, although less in children with ASD. VS and MEL scores were the best predictors of children aligning their utterance.
+
+# 2. What Predicts How Much Children Align?
+The actual number of linguistic forms aligned in those utterances decreases with age and more so in the TD children. This indicates that as they grow, children might engage more in their parents’ linguistic production by reusing their words and syntax, but they do so more flexibly and employ them in slightly different constructions (thus reducing the level of alignment). Verbal skills were positively related to alignment rate in both groups, but negatively to alignment level (for both groups on syntactic levels and only the ASD group for lexical levels). Socialization skills were positively related to lexical alignment rate for both groups, and to the increase in syntactic alignment rates for both groups. They were also strongly negatively related to syntactic alignment levels. 
 
 
-```{r fig1, fig.cap = "Factors predicting the presence or absence of alignment", message=FALSE, warning = F, out.width='80%'}
 
 
-t1 <- read.csv("/Users/ethan/Documents/GitHub/MOLA2020/Poster/Table1a.csv")
+```{r fig1, message=FALSE, warning = F, out.width='82%',out.height='82%'}
 
-bp(t1, "")
-
+bp(t1, "Factors predicting whether children align an utterance")
+bp(t2, "Factors predicting how aligned an utterance is")
+bp(t3, "Factors predicting whether children align exactly")
 ########################## for making tables with colorbars; probably get rid of this: too unclear
 #t1 %>%
 #  mutate(
@@ -159,38 +162,8 @@ bp(t1, "")
 
 ```
 
-Older children align more often, although less in children with ASD. VS and MEL scores were the best predictors of children aligning their utterance.
-
-# 2. What Predicts How Much Children Align?
-
-
-```{r fig2, fig.cap = "Alignment Rate: Do Children Align?", out.width='80%'}
-
-
-t2 <- read.csv("/Users/ethan/Documents/GitHub/MOLA2020/Poster/Table2a.csv")
-
-bp(t2, "")
-
-
-
-
-```
-
-The actual number of linguistic forms aligned in those utterances decreases with age and more so in the TD children. This indicates that as they grow, children might engage more in their parents’ linguistic production by reusing their words and syntax, but they do so more flexibly and employ them in slightly different constructions (thus reducing the level of alignment). Verbal skills were positively related to alignment rate in both groups, but negatively to alignment level (for both groups on syntactic levels and only the ASD group for lexical levels). Socialization skills were positively related to lexical alignment rate for both groups, and to the increase in syntactic alignment rates for both groups. They were also strongly negatively related to syntactic alignment levels. 
-
-
 
 # 3. What Predicts Exact Repetition of Parents' Utterances?
-
-```{r fig3, fig.cap = "Exact Repetitions", out.width='80%'}
-
-
-t3 <- read.csv("/Users/ethan/Documents/GitHub/MOLA2020/Poster/Table3a.csv")
-
-bp(t3, "")
-
-```
-
 
 # Next Steps
 
