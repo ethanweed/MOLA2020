@@ -294,6 +294,7 @@ font-size: 20pt;
 <div class='poster_body'>
 <div id="what-is-conversational-alignment" class="section level1">
 <h1>What is Conversational Alignment?</h1>
+<p>Conversational Alignment is the re-use of an interlocutor’s words and syntax, and helps establish common ground (REF). We calculated alignment in the conversations of 67 parent-child dyads over 2 years (approx. ages 2-4).</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-1"></span>
 <img src="Cosine-similarity-vert.jpg" alt="Edmund C. Tarbell, &quot;Marjorie and Little Edmund&quot;" width="95%" height="95%" />
 <p class="caption">
@@ -301,26 +302,28 @@ Figure 1: Edmund C. Tarbell, “Marjorie and Little Edmund”
 </p>
 </div>
 </div>
-<div id="do-children-align" class="section level1">
-<h1>Do Children Align?</h1>
+<div id="what-predicts-whether-children-align" class="section level1">
+<h1>What Predicts Whether Children Align?</h1>
 <div class="figure"><span id="fig:fig1"></span>
-<img src="Fusaroli-et-al_files/figure-html/fig1-1.png" alt="Alignment Rate: Do Children Align?" width="100%" />
+<img src="Fusaroli-et-al_files/figure-html/fig1-1.png" alt="Factors predicting the presence or absence of alignment" width="80%" />
 <p class="caption">
-Figure 2: Alignment Rate: Do Children Align?
+Figure 2: Factors predicting the presence or absence of alignment
 </p>
 </div>
+<p>Older children align more often, although less in children with ASD. VS and MEL scores were the best predictors of children aligning their utterance.</p>
 </div>
-<div id="how-much-do-children-align" class="section level1">
-<h1>How Much do Children Align?</h1>
+<div id="what-predicts-how-much-children-align" class="section level1">
+<h1>2. What Predicts How Much Children Align?</h1>
 <div class="figure"><span id="fig:fig2"></span>
 <img src="Fusaroli-et-al_files/figure-html/fig2-1.png" alt="Alignment Rate: Do Children Align?" width="80%" />
 <p class="caption">
 Figure 3: Alignment Rate: Do Children Align?
 </p>
 </div>
+<p>The actual number of linguistic forms aligned in those utterances decreases with age and more so in the TD children. This indicates that as they grow, children might engage more in their parents’ linguistic production by reusing their words and syntax, but they do so more flexibly and employ them in slightly different constructions (thus reducing the level of alignment). Verbal skills were positively related to alignment rate in both groups, but negatively to alignment level (for both groups on syntactic levels and only the ASD group for lexical levels). Socialization skills were positively related to lexical alignment rate for both groups, and to the increase in syntactic alignment rates for both groups. They were also strongly negatively related to syntactic alignment levels.</p>
 </div>
-<div id="how-much-of-childrens-alignment-is-exact-repetition" class="section level1">
-<h1>How Much of Children’s Alignment is Exact Repetition?</h1>
+<div id="what-predicts-exact-repetition-of-parents-utterances" class="section level1">
+<h1>3. What Predicts Exact Repetition of Parents’ Utterances?</h1>
 <div class="figure"><span id="fig:fig3"></span>
 <img src="Fusaroli-et-al_files/figure-html/fig3-1.png" alt="Exact Repetitions" width="80%" />
 <p class="caption">
@@ -333,6 +336,10 @@ Figure 4: Exact Repetitions
 </div>
 <div id="conclusion" class="section level1">
 <h1>Conclusion</h1>
+</div>
+<div id="technical-details" class="section level1">
+<h1>Technical details</h1>
+<p>We used Bayesian multilevel zero-and-one-inflated beta regression models to assess how much a variety of factors influence 1) whether children align at all with their parents’ utterances, 2) how much they align, and 3) how much of their alignment is exact repetition. Alignment was calculated using the ALIGN Python library (Duran et al., 2019). We first contrasted child alignment in actual conversations with that in surrogate pairs formed by a parent and a child from two different dyads. We used Bayesian multilevel zero-and-one-inflated beta regression models. This accounts for the propensity of children to align at all (rate), the number of linguistic forms aligned on average when the children actually align (levelª), and exact repetitions, as a function of diagnostic group, visit, Vineland Socialization (VS), Mullen Expressive Language (MEL) and Visual Reception (MVR).</p>
 </div>
 <div id="references" class="section level1">
 <h1>References</h1>

@@ -63,7 +63,7 @@ knitr::opts_chunk$set(echo = FALSE)
 ```
 
 ```{r libraries}
-pacman::p_load("dplyr", "kableExtra", "tidyverse")
+pacman::p_load("dplyr", "kableExtra", "tidyverse", "ggpubr")
 ```
 
 
@@ -98,6 +98,11 @@ cb <- function(x) {
 barcolor1 <- "#8FA2DF"
 barcolor2 <- "#D8B743"
 
+# Create a text grob
+tgrob <- text_grob(text, face = "plain", color = "black", just = "left")
+# Draw the text
+#as_ggplot(tgrob)
+
 bp <- function(t, title){
   t$Predictors <- factor(t$Predictors, levels = t$Predictors)
   t$Predictors <- fct_rev(t$Predictors)
@@ -107,11 +112,11 @@ bp <- function(t, title){
     geom_bar(aes(fill = Type), position = "dodge", stat="identity") +
     coord_flip() +
     ylim(-1, 1) +
-    #scale_fill_brewer(palette = "Dark2") +
     scale_fill_manual("legend", values = c("Lexical" = barcolor1, "Syntactic" = barcolor2)) +
     theme_classic() +
+    theme(legend.position = c(0.2, 0.15)) +
     labs( y = "Beta (Log Odds)",
-          x = "Predictors", 
+          x = "", 
           title = title)
 }
 
@@ -124,17 +129,18 @@ bp <- function(t, title){
 
 # What is Conversational Alignment?
 
+Conversational Alignment is the re-use of an interlocutor’s words and syntax, and helps establish common ground (REF). We calculated alignment in the conversations of 67 parent-child dyads over 2 years (approx. ages 2-4).
+
 ```{r echo=FALSE, fig.cap = "Edmund C. Tarbell, \"Marjorie and Little Edmund\"",  out.width= "95%", out.height= "95%", fig.align="center"}
 knitr::include_graphics("Cosine-similarity-vert.jpg")
 ```
 
 
 
+# What Predicts Whether Children Align?  
 
-# Do Children Align?  
-  
-  
-```{r fig1, fig.cap = "Alignment Rate: Do Children Align?", message=FALSE, warning = F, out.width='100%'}
+
+```{r fig1, fig.cap = "Factors predicting the presence or absence of alignment", message=FALSE, warning = F, out.width='80%'}
 
 
 t1 <- read.csv("/Users/ethan/Documents/GitHub/MOLA2020/Poster/Table1a.csv")
@@ -153,9 +159,11 @@ bp(t1, "")
 
 ```
 
+Older children align more often, although less in children with ASD. VS and MEL scores were the best predictors of children aligning their utterance.
+
+# 2. What Predicts How Much Children Align?
 
 
-# How Much do Children Align?
 ```{r fig2, fig.cap = "Alignment Rate: Do Children Align?", out.width='80%'}
 
 
@@ -163,13 +171,16 @@ t2 <- read.csv("/Users/ethan/Documents/GitHub/MOLA2020/Poster/Table2a.csv")
 
 bp(t2, "")
 
+
+
+
 ```
 
+The actual number of linguistic forms aligned in those utterances decreases with age and more so in the TD children. This indicates that as they grow, children might engage more in their parents’ linguistic production by reusing their words and syntax, but they do so more flexibly and employ them in slightly different constructions (thus reducing the level of alignment). Verbal skills were positively related to alignment rate in both groups, but negatively to alignment level (for both groups on syntactic levels and only the ASD group for lexical levels). Socialization skills were positively related to lexical alignment rate for both groups, and to the increase in syntactic alignment rates for both groups. They were also strongly negatively related to syntactic alignment levels. 
 
 
 
-
-# How Much of Children's Alignment is Exact Repetition?
+# 3. What Predicts Exact Repetition of Parents' Utterances?
 
 ```{r fig3, fig.cap = "Exact Repetitions", out.width='80%'}
 
@@ -187,7 +198,8 @@ bp(t3, "")
 
 # Conclusion
 
-
+# Technical details
+We used Bayesian multilevel zero-and-one-inflated beta regression models to assess how much a variety of factors influence 1) whether children align at all with their parents' utterances, 2) how much they align, and 3) how much of their alignment is exact repetition. Alignment was calculated using the ALIGN Python library (Duran et al., 2019). We first contrasted child alignment in actual conversations with that in surrogate pairs formed by a parent and a child from two different dyads. We used Bayesian multilevel zero-and-one-inflated beta regression models. This accounts for the propensity of children to align at all (rate), the number of linguistic forms aligned on average when the children actually align (levelª), and exact repetitions, as a function of diagnostic group, visit, Vineland Socialization (VS), Mullen Expressive Language (MEL) and Visual Reception (MVR). 
 
 ```{r, include=FALSE}
 knitr::write_bib(c('knitr','rmarkdown','posterdown','pagedown'), 'packages.bib')
