@@ -98,9 +98,9 @@ cb <- function(x) {
 barcolor1 <- "#8FA2DF"
 barcolor2 <- "#D8B743"
 
-t1 <- read.csv("/Users/ethan/Documents/GitHub/MOLA2020/Poster/Table1a.csv")
-t2 <- read.csv("/Users/ethan/Documents/GitHub/MOLA2020/Poster/Table2a.csv")
-t3 <- read.csv("/Users/ethan/Documents/GitHub/MOLA2020/Poster/Table3a.csv")
+t1 <- read.csv("/Users/ethan/Documents/GitHub/MOLA2020/Poster/Table1b.csv")
+t2 <- read.csv("/Users/ethan/Documents/GitHub/MOLA2020/Poster/Table2b.csv")
+t3 <- read.csv("/Users/ethan/Documents/GitHub/MOLA2020/Poster/Table3b.csv")
 
 bp <- function(t, title){
   t$Predictors <- factor(t$Predictors, levels = t$Predictors)
@@ -110,10 +110,9 @@ bp <- function(t, title){
     ggplot(t, aes(t$Predictors, LogOdds)) +
     geom_bar(aes(fill = Type), position = "dodge", stat="identity") +
     coord_flip() +
-    ylim(-1, 1) +
+    ylim(-0.75, 0.75) +
     scale_fill_manual("legend", values = c("Lexical" = barcolor1, "Syntactic" = barcolor2)) +
     theme_classic() +
-    theme(legend.position = c(0.2, 0.15)) +
     labs( y = "Beta (Log Odds)",
           x = "", 
           title = title)
@@ -126,44 +125,47 @@ bp <- function(t, title){
 ```
 
 
-# What is Conversational Alignment?
+# What is Conversational Alignment, and How Can We Measure It?
 
-Conversational Alignment is the re-use of an interlocutor’s words and syntax, and helps establish common ground (REF). We calculated alignment in the conversations of 67 parent-child dyads over 2 years (approx. ages 2-4).
-
-```{r echo=FALSE, fig.cap = "Edmund C. Tarbell, \"Marjorie and Little Edmund\"",  out.width= "95%", out.height= "95%", fig.align="center"}
-knitr::include_graphics("Cosine-similarity-vert.jpg")
+```{r echo=FALSE, fig.cap = "Edmund C. Tarbell, \"Marjorie and Little Edmund\"",  out.width= "80%", fig.align="center"}
+knitr::include_graphics("Cosine-similarity-vert-V2.jpg")
 ```
 
-
+Conversational Alignment is the re-use of an interlocutor’s words and syntax, and helps establish common ground (REF). We calculated alignment as cosine similarity in turn-by-turn utterances in the conversations of 67 parent-child dyads over 2 years (approx. ages 2-4).
 
 # What Predicts Whether Children Align?  
-Older children align more often, although less in children with ASD. VS and MEL scores were the best predictors of children aligning their utterance.
-
-# 2. What Predicts How Much Children Align?
-The actual number of linguistic forms aligned in those utterances decreases with age and more so in the TD children. This indicates that as they grow, children might engage more in their parents’ linguistic production by reusing their words and syntax, but they do so more flexibly and employ them in slightly different constructions (thus reducing the level of alignment). Verbal skills were positively related to alignment rate in both groups, but negatively to alignment level (for both groups on syntactic levels and only the ASD group for lexical levels). Socialization skills were positively related to lexical alignment rate for both groups, and to the increase in syntactic alignment rates for both groups. They were also strongly negatively related to syntactic alignment levels. 
 
 
+```{r fig1, fig.cap = "Factors influencing liklihood of child aligning",message=FALSE, warning = F, out.width='75%'}
 
-
-```{r fig1, message=FALSE, warning = F, out.width='82%',out.height='82%'}
-
-bp(t1, "Factors predicting whether children align an utterance")
-bp(t2, "Factors predicting how aligned an utterance is")
-bp(t3, "Factors predicting whether children align exactly")
-########################## for making tables with colorbars; probably get rid of this: too unclear
-#t1 %>%
-#  mutate(
-#    Lexical = cb(Lexical),
-#    Syntactic = cb(Syntactic)
-#  ) %>%
-#  knitr::kable(escape = F, caption = caption, booktabs = FALSE, align = "l")
+bp(t1, "")
 
 #kable(t1, "html", align = "c", caption = "Alignment Rate: Do Children Align?", booktabs = T)
 
 ```
 
+Older children align more often, although less in children with ASD. VS and MEL scores were the best predictors of children aligning their utterance.
+
+# 2. What Predicts How Much Children Align?
+
+
+```{r fig2, fig.cap = "Factors influencing amount of alignment without exact repition", message=FALSE, warning = F, out.width='75%'}
+
+bp(t2, "")
+
+```
 
 # 3. What Predicts Exact Repetition of Parents' Utterances?
+
+
+```{r fig3, fig.cap = "Factors influencing liklihood of child aligning all tokens", message=FALSE, warning = F, out.width='75%'}
+
+
+bp(t3, "")
+
+
+```
+
 
 # Next Steps
 

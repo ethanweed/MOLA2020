@@ -1,0 +1,6 @@
+﻿Predictors,Lexical,Syntactic
+ASD,0.09,0.16
+Age ,-0.2,-0.2
+Age * ASD,0.13,0.08
+Vineland Socialization (VS),0.57,0.75
+Mullen Exp. Lang. (MEL),-0.56,-0.47
