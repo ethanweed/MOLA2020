@@ -43,14 +43,14 @@ column_numbers: 3
 
 primary_colour: \#B7802A
 secondary_colour: \#F0F8FF
-accent_colour: \#E7F2FA
+accent_colour: \#EDEEC6
 
 title_textcol: \#F0F8FF
 affiliation_textsize: "25pt"
 
 sectitle_bgcol: \#8FA2DF
 sectitle_textcol: \#F0F8FF
-
+sectitle_bordercol: \#EDEEC6
 
 output: 
   posterdown::posterdown_html:
@@ -106,6 +106,7 @@ bp <- function(t, title){
     ggplot(t, aes(t$Predictors, LogOdds)) +
     geom_bar(aes(fill = Type), position = "dodge", stat="identity") +
     coord_flip() +
+    ylim(-1, 1) +
     #scale_fill_brewer(palette = "Dark2") +
     scale_fill_manual("legend", values = c("Lexical" = barcolor1, "Syntactic" = barcolor2)) +
     theme_classic() +
@@ -113,6 +114,10 @@ bp <- function(t, title){
           x = "Predictors", 
           title = title)
 }
+
+
+ #   geom_errorbar(aes(ymin=len-sd, ymax=len+sd), width=.2,
+  #             position=position_dodge(.9))
 
 ```
 
