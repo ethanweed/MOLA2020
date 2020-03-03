@@ -46,6 +46,7 @@ secondary_colour: \#F0F8FF
 accent_colour: \#EDEEC6
 
 title_textcol: \#F0F8FF
+title_textsize: "70pt"
 affiliation_textsize: "25pt"
 
 sectitle_bgcol: \#8FA2DF
@@ -55,7 +56,10 @@ sectitle_bordercol: \#EDEEC6
 output: 
   posterdown::posterdown_html:
     self_contained: false
-bibliography: packages.bib
+
+bibliography: MyLibrary.bib
+bibliography_spacing: 0 # sets the multiplier for line spacing of bibliography spacing (between 0 and 1)
+bibliography_textsize: "tiny"  # size of the bibliography text size (handy for one too many references!)
 ---
 
 ```{r setup, include=FALSE}
@@ -102,21 +106,52 @@ t1 <- read.csv("/Users/ethan/Documents/GitHub/MOLA2020/Poster/Table1b.csv")
 t2 <- read.csv("/Users/ethan/Documents/GitHub/MOLA2020/Poster/Table2b.csv")
 t3 <- read.csv("/Users/ethan/Documents/GitHub/MOLA2020/Poster/Table3b.csv")
 
+t_est <- t3[,c(1,2,5)]
+t_lower <- t3[, c(1,3,6)]
+t_upper <- t3[, c(1,4,7)]
+t_est <- gather(t_est, key = "Type", value = "LogOdds", -Predictors)
+t_lower <- gather(t_lower, key = "ci_Lower", value = "Lower", -Predictors)
+t_upper <- gather(t_upper, key = "ci_Upper", value = "Upper", -Predictors)
 
-bp <- function(t, title){
+t_est$Lower <- t_lower$Lower
+t_est$Upper <- t_upper$Upper
+
+#tx <- merge(x = t_est, y = t_lower, by = "Predictors", all.y = TRUE)
+#ty <- merge(x = tx, y = t_upper, by = "Predictors", all.y = TRUE)
+#ty$ci_Lower <- NULL
+#ty$ci_Upper <- NULL
+#ty$Predictors <- fct_rev(ty$Predictors)
+#ty$Type <- as.factor(ty$Type)
+
+#Right outer: merge(x = df1, y = df2, by = "IndexColumn", all.y = TRUE)
+
+
+
+x <-  ggplot(t_est, aes(Predictors, LogOdds, fill = Type)) +
+  geom_col(aes(), position = "dodge") +
+  geom_errorbar(aes(ymin = Lower, ymax = Upper), width = .2, position=position_dodge(.9)) +
+  coord_flip() +
+  #ylim(-0.75, 0.75) +
+  scale_fill_manual("Alignment Type", values = c("Lexical" = barcolor1, "Syntactic" = barcolor2)) +
+  theme_classic() +
+  labs( y = "\U03B2 (Log Odds)",
+        x = "")
+x
+x + geom_errorbar(aes(ymin = Lower, ymax = Upper, group = Type))
+
+bp <- function(t){
   t$Predictors <- factor(t$Predictors, levels = t$Predictors)
   t$Predictors <- fct_rev(t$Predictors)
-  t <- gather(t, key = "Type", value = "LogOdds", -Predictors)
-
+  #t <- gather(t, key = "Type", value = "LogOdds", -Predictors, -Lex_lower, -Lex_upper, -Syn_lower, -Syn_upper)
     ggplot(t, aes(t$Predictors, LogOdds)) +
     geom_bar(aes(fill = Type), position = "dodge", stat="identity") +
+    geom_errorbar(aes(ymin = lower, ymax = upper)) +
     coord_flip() +
     ylim(-0.75, 0.75) +
     scale_fill_manual("Alignment Type", values = c("Lexical" = barcolor1, "Syntactic" = barcolor2)) +
     theme_classic() +
-    labs( y = "Beta (Log Odds)",
-          x = "", 
-          title = title)
+    labs( y = "\U03B2 (Log Odds)",
+          x = "")
 }
 
 
@@ -132,50 +167,68 @@ bp <- function(t, title){
 knitr::include_graphics("Cosine-similarity-vert-V2.jpg")
 ```
 
-Conversational Alignment is the re-use of an interlocutor’s words and syntax, and helps establish common ground (REF). We calculated alignment as cosine similarity in turn-by-turn utterances in the conversations of 67 parent-child dyads over 2 years (approx. ages 2-4).
+Conversational Alignment is the re-use of an interlocutor’s words and syntax, and helps establish common ground [@clark1991grounding]. We calculated alignment in turn-by-turn utterances in the conversations of 67 parent-child dyads over 2 years (approx. ages 2-4).
 
 # What Predicts Whether Children Align With Parents' Utterances?  
 
-
 ```{r fig1, fig.cap = "Factors influencing liklihood of child aligning any tokens",message=FALSE, warning = F, out.width='75%'}
 
-bp(t1, "")
+bp(t1)
 
 #kable(t1, "html", align = "c", caption = "Alignment Rate: Do Children Align?", booktabs = T)
 
 ```
 
-Older children align more often, although less in children with ASD. VS and MEL scores were the best predictors of children aligning their utterance.
+Older children aligned more often, although less so in children with ASD. VS and MEL scores were the best predictors of children producing an utterance with aligned tokens.
+
+# What Does Alignment Actually Look Like?
+
+<br>
+
+```{r echo=FALSE, warning = FALSE, out.width= "70%", fig.align="center"}
+transcript <- read.csv("/Users/ethan/Documents/GitHub/MOLA2020/Poster/transcript-example.csv")
+transcript$X <- NULL
+names(transcript)[names(transcript) == 'Cosine.similarity'] <- 'Cosine Similarity'
+kable(transcript, "html", caption = "Lexical Alignment", align = "l", booktabs = T)
+```
+
+<br>
+
+```{r echo=FALSE, warning = FALSE, out.width= "70%", fig.align="center"}
+transcript_syn <- read.csv("/Users/ethan/Documents/GitHub/MOLA2020/Poster/transcript-example-syntactic.csv")
+transcript_syn$X <- NULL
+names(transcript_syn)[names(transcript_syn) == 'Cosine.Similarity'] <- 'Cosine Similarity'
+kable(transcript_syn, "html", caption = "Syntactic Alignment", align = "l", booktabs = T)
+```
+
+<br>
 
 # What Predicts Exact Repetition of Parents' Utterances?
 
 ```{r fig2, fig.cap = "Factors influencing liklihood of child aligning all tokens", message=FALSE, warning = F, out.width='75%'}
 
-
-bp(t3, "")
-
+bp(t3)
 
 ```
+Older children were less likely to produce an exact repetition of their parent's utterance, although this was less so in children with ASD. High scores on VS predicted exact repetition positively, while high scores on MEL predicted exact repetition negatively.
 
+<br>
 
-# What Predicts the Amount of Alignment in Partialy Aligned Utterances?
+# What Predicts the Level of Partial Alignment?
 
 ```{r fig3, fig.cap = "Factors influencing amount partial alignment", message=FALSE, warning = F, out.width='75%'}
 
-bp(t2, "")
+bp(t2)
 
 ```
+Older children aligned less, and chldren with ASD produced fewer aligned lexical tokens than TD children.
 
-
-
-# Next Steps
-
-
-
-# Conclusion
+# Conclusion and Next Steps
+Children with ASD do align lexically and syntactically, but show a slightly different pattern than TD children. An important next step will be to take a closer qualitative look at the exchanges between parents and children, to see *what* sort of tokens they align, and under what circumstances. Another important step will be to assess children's alignment measures as a predictor of later language outcomes.
 
 # Technical details
-We used Bayesian multilevel zero-and-one-inflated beta regression models to assess how much a variety of factors influence 1) whether children align at all with their parents' utterances, 2) how much they align, and 3) how much of their alignment is exact repetition. Alignment was calculated using the ALIGN Python library (Duran et al., 2019). We first contrasted child alignment in actual conversations with that in surrogate pairs formed by a parent and a child from two different dyads. We used Bayesian multilevel zero-and-one-inflated beta regression models. This accounts for the propensity of children to align at all (rate), the number of linguistic forms aligned on average when the children actually align (levelª), and exact repetitions, as a function of diagnostic group, visit, Vineland Socialization (VS), Mullen Expressive Language (MEL) and Visual Reception (MVR). 
+Cosine similiarity (CS) was calculated using the ALIGN Python library [@duran2019align]. We used a Bayesian multilevel zero-and-one-inflated beta regression approach, which models alignment as a distribution with three parameters, accounting for the propensity of children to align at all (CS = 0), exact repetitions (CS = 1), and the number of linguistic forms aligned on average when the children actually align (CS > 0 < 1), as a function of diagnostic group, age (visit), Vineland Socialization, Mullen Expressive Language and Mullen Visual Reception. 
+
 
 ```{r, include=FALSE}
 knitr::write_bib(c('knitr','rmarkdown','posterdown','pagedown'), 'packages.bib')

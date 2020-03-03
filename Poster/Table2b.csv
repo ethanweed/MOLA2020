@@ -1,6 +1,11 @@
-﻿Predictors,Lexical,Syntactic
-ASD,-0.19,0.02
-Age ,-0.05,-0.06
-Age * ASD,0.06,0.03
-Vineland Socialization (VS),0.04,0.04
-Mullen Exp. Lang. (MEL),-0.02,-0.06
+﻿Predictors,Beta,lower,upper,Type
+ASD,-0.19,-0.37,0.01,Lexical
+Age ,-0.05,-0.07,-0.03,Lexical
+Age * ASD,0.06,0.03,0.07,Lexical
+Vineland Socialization (VS),0.04,-0.17,0.22,Lexical
+Mullen Exp. Lang. (MEL),-0.02,-0.16,0.13,Lexical
+ASD,0.02,-0.15,0.18,Syntactic
+Age ,-0.06,-0.08,-0.04,Syntactic
+Age * ASD,0.03,0,0.07,Syntactic
+Vineland Socialization (VS),0.04,-0.11,0.2,Syntactic
+Mullen Exp. Lang. (MEL),-0.06,-0.1,-0.02,Syntactic
