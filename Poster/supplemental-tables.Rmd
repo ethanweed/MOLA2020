@@ -1,0 +1,33 @@
+---
+title: "Fusaroli et al supplemental tables"
+author: "Ethan Weed"
+date: "3/3/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r echo = FALSE}
+pacman::p_load("kableExtra")
+t1 <- read.csv("/Users/ethan/Documents/GitHub/MOLA2020/Poster/Table1.csv")
+t2 <- read.csv("/Users/ethan/Documents/GitHub/MOLA2020/Poster/Table2.csv")
+t3 <- read.csv("/Users/ethan/Documents/GitHub/MOLA2020/Poster/Table3.csv")
+```
+
+```{r echo = FALSE}
+kable(t1, "html", align = "c", caption = "Alignment Rate", booktabs = T)
+```
+
+```{r echo = FALSE}
+
+kable(t3, "html", align = "c", caption = "Exact Repetions", booktabs = T)
+
+```
+
+
+```{r echo = FALSE}
+
+kable(t2, "html", align = "c", caption = "Level of Partial Alignment", booktabs = T)
+```
