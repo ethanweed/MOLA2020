@@ -102,6 +102,7 @@ t1 <- read.csv("/Users/ethan/Documents/GitHub/MOLA2020/Poster/Table1b.csv")
 t2 <- read.csv("/Users/ethan/Documents/GitHub/MOLA2020/Poster/Table2b.csv")
 t3 <- read.csv("/Users/ethan/Documents/GitHub/MOLA2020/Poster/Table3b.csv")
 
+
 bp <- function(t, title){
   t$Predictors <- factor(t$Predictors, levels = t$Predictors)
   t$Predictors <- fct_rev(t$Predictors)
@@ -111,7 +112,7 @@ bp <- function(t, title){
     geom_bar(aes(fill = Type), position = "dodge", stat="identity") +
     coord_flip() +
     ylim(-0.75, 0.75) +
-    scale_fill_manual("legend", values = c("Lexical" = barcolor1, "Syntactic" = barcolor2)) +
+    scale_fill_manual("Alignment Type", values = c("Lexical" = barcolor1, "Syntactic" = barcolor2)) +
     theme_classic() +
     labs( y = "Beta (Log Odds)",
           x = "", 
@@ -133,10 +134,10 @@ knitr::include_graphics("Cosine-similarity-vert-V2.jpg")
 
 Conversational Alignment is the re-use of an interlocutor’s words and syntax, and helps establish common ground (REF). We calculated alignment as cosine similarity in turn-by-turn utterances in the conversations of 67 parent-child dyads over 2 years (approx. ages 2-4).
 
-# What Predicts Whether Children Align?  
+# What Predicts Whether Children Align With Parents' Utterances?  
 
 
-```{r fig1, fig.cap = "Factors influencing liklihood of child aligning",message=FALSE, warning = F, out.width='75%'}
+```{r fig1, fig.cap = "Factors influencing liklihood of child aligning any tokens",message=FALSE, warning = F, out.width='75%'}
 
 bp(t1, "")
 
@@ -146,25 +147,25 @@ bp(t1, "")
 
 Older children align more often, although less in children with ASD. VS and MEL scores were the best predictors of children aligning their utterance.
 
-# 2. What Predicts How Much Children Align?
+# What Predicts Exact Repetition of Parents' Utterances?
 
-
-```{r fig2, fig.cap = "Factors influencing amount of alignment without exact repition", message=FALSE, warning = F, out.width='75%'}
-
-bp(t2, "")
-
-```
-
-# 3. What Predicts Exact Repetition of Parents' Utterances?
-
-
-```{r fig3, fig.cap = "Factors influencing liklihood of child aligning all tokens", message=FALSE, warning = F, out.width='75%'}
+```{r fig2, fig.cap = "Factors influencing liklihood of child aligning all tokens", message=FALSE, warning = F, out.width='75%'}
 
 
 bp(t3, "")
 
 
 ```
+
+
+# What Predicts the Amount of Alignment in Partialy Aligned Utterances?
+
+```{r fig3, fig.cap = "Factors influencing amount partial alignment", message=FALSE, warning = F, out.width='75%'}
+
+bp(t2, "")
+
+```
+
 
 
 # Next Steps
