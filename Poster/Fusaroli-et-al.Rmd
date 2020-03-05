@@ -1,6 +1,6 @@
 ---
-poster_height: "37in"
-poster_width: "48in"
+poster_height: "95.5cm"#"37in"
+poster_width: "122cm" #"48in"
 font_size: "30pt"
 title: Intact but Atypical Lexical and Syntactic Alignment in Spontaneous Speech of Children with Autism Spectrum Disorder
 author:
@@ -122,7 +122,7 @@ pt <- function(transcript){
 
 # What is Conversational Alignment, and How Can We Measure It?
 
-```{r echo=FALSE, fig.cap = "Edmund C. Tarbell, \"Marjorie and Little Edmund\" and Cosine Similarity",  out.width= "80%", fig.align="center"}
+```{r echo=FALSE, fig.cap = "[@Tarbell_1928], \"Marjorie and Little Edmund\" and Cosine Similarity",  out.width= "80%", fig.align="center"}
 knitr::include_graphics("Cosine-similarity-vert-V2.jpg")
 ```
 
@@ -130,7 +130,7 @@ Conversational Alignment is the re-use of an interlocutor’s words and syntax, 
 
 # What Predicts Whether Children Align With Parents' Utterances?  
 
-```{r fig1, fig.cap = "Factors influencing liklihood of child aligning any tokens",message=FALSE, warning = F, out.width='75%'}
+```{r fig1, fig.cap = "Factors influencing liklihood of child aligning any tokens (Error bars indicate CI's)",message=FALSE, warning = F, out.width='75%'}
 
 bp(t1)
 
@@ -149,6 +149,8 @@ pt(transcript_lex)
 ```
 
 <br>
+<br>
+<br>
 
 ```{r echo=FALSE, out.width= "70%", fig.align="center"}
 
@@ -157,36 +159,39 @@ pt(transcript_syn)
 ```
 
 <br>
+<br>
 
 # What Predicts Exact Repetition of Parents' Utterances?
 
-```{r fig2, fig.cap = "Factors influencing liklihood of child aligning all tokens", message=FALSE, warning = F, out.width='75%'}
+```{r fig2, fig.cap = "Factors influencing liklihood of child aligning all tokens (Error bars indicate CI's)", message=FALSE, warning = F, out.width='75%'}
 
 bp(t3)
 
 ```
-Older children were less likely to produce an exact repetition of their parent's utterance, although this was less so in children with ASD. High scores on VS predicted exact repetition positively, while high scores on MEL predicted exact repetition negatively.
+Older children were less likely to produce an exact repetition of their parent's utterance, although this was less so in children with ASD. Higher scores on VS predicted exact repetition positively, while higher scores on MEL predicted exact repetition negatively.
 
 <br>
 
 # What Predicts the Level of Partial Alignment?
 
-```{r fig3, fig.cap = "Factors influencing amount partial alignment", message=FALSE, warning = F, out.width='75%'}
+```{r fig3, fig.cap = "Factors influencing amount of partial alignment (Error bars indicate CI's)", message=FALSE, warning = F, out.width='75%'}
 
 bp(t2)
 
 ```
-Older children aligned less, and chldren with ASD produced fewer aligned lexical tokens than TD children.
+Older children aligned less, and children with ASD produced fewer aligned lexical tokens than TD children.
 
 # Conclusion and Next Steps
 Children with ASD do align lexically and syntactically, but show a slightly different pattern than TD children. An important next step will be to take a closer qualitative look at the exchanges between parents and children, to see *what sort* of tokens they align, and under *what circumstances,* as well as assessing children's alignment as a predictor of later language outcomes.
 
 # Technical details
-Cosine similiarity (CS) was calculated using the ALIGN Python library [@duran2019align] for lexical (1-gram) and syntactic (2-gram) tokens. We used a Bayesian multilevel zero-and-one-inflated beta regression approach, modelling alignment as a distribution with three parameters, accounting for the propensity of children to align at all (CS = 0), exact repetitions (CS = 1), and the number of linguistic forms aligned in partial alignment (CS > 0 < 1), as a function of diagnostic group, age (visit), Vineland Socialization, Mullen Expressive Language and Mullen Visual Reception. Poster built with Posterdown  [@R-posterdown] for R.
+Cosine similiarity (CS) was calculated using the ALIGN Python library [@duran2019align] for lexical (1-gram) and syntactic (2-gram) tokens. We used a Bayesian multilevel zero-and-one-inflated beta regression approach, modelling alignment as a distribution with three parameters, accounting for the propensity of children to align at all (CS = 0), exact repetitions (CS = 1), and the number of linguistic forms aligned in partial alignment (0 < CS < 1), as a function of diagnostic group, age (visit), Vineland Socialization, Mullen Expressive Language and Mullen Visual Reception. Poster built with Posterdown  [@R-posterdown] for R.
 
 
 ```{r, include=FALSE}
 knitr::write_bib(c('knitr','rmarkdown','posterdown','pagedown'), 'packages.bib')
 ```
+
+
 
 # References
