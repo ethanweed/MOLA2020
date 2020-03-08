@@ -226,7 +226,33 @@ a <- aov(data = Sub_SRS, SRS_total ~ Group)
 pander::pander(TukeyHSD(a))
 ```
 
+### SRS subscales
+
+Finally, we also parcelled out the Voice Group's SRS scores by subscale.
+
+```{r echo = FALSE, warning = FALSE, message = FALSE}
+# plot subscale scores vs. groups
+Sub_SRS$Soc_Aware <- df_soc$Soc_Aware_T
+Sub_SRS$Soc_Cog <- df_soc$Soc_Cog_T
+Sub_SRS$Soc_Comm <- df_soc$Soc_Comm_T
+Sub_SRS$Soc_Mot <- df_soc$Soc_Mot_T
+Sub_SRS$Aut_Mann <- df_soc$Aut_Mann_T
+Sub_SRS$SRS_total <- NULL
+
+Sub_SRS_long <- gather(Sub_SRS, key = "scales", value = "score", -ID, -Group, -Dx)
+
+ggplot(Sub_SRS_long, aes(Group, score, fill = scales)) +
+  geom_boxplot(outlier.size = NULL) +
+  theme_classic() +
+  labs(title = "SRS Subscales")
+
+```
+
+When parcelled out by subscale, the same overall pattern holds. Interestingly, however, Voice Group 1 has essentially the same Social Awarness score as Voice Group 2, while Autistic Mannerisms, Social Cognition, Social Communication, and Social Motivation are all substantially higher.
 
 ##Conclusions
 
 We identified three acoustic profiles among the speakers, and these profiles significantly predicted scores on the SRS subscales (F(2,26) = 6.8, p = 0.004). Individuals in Voice Groups 1 and 2 had significantly higher SRS total scores than individuals in Voice Group 3 (post-hoc Tukey's HSD, Group 3-1: p = 0.007, Group 3-2: p = 0.023). Group 1 was distinguished primarily by rythmic factors: a high articulation rate and relatively slower speech rate. This may be perceived as quick bursts of syllables, separated by longer pauses. Group 2 was distinguished primarily by voice quality factors: a low average amount of breathiness, but a high variation in breathiness. This may be perceived as an overall unsteadiness of the voice. Group 3 primarily by a higher overall amount of breathiness, together with a lower variation in breathiness, as well as a more even speech rate overall. It is likely that these acoustic measures contribute to community perceptions of atypicality (Sasson et al, 2017) and ASD “frankness” (de Marchena & Miller, 2016). Results provide a foundation for exploration of how (and whether) to intervene with prosodic and other speech qualities.
+
+
+
