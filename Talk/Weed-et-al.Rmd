@@ -30,7 +30,7 @@ We analyzed speech recordings (8 scripted sentences per participant) from 15 ado
 
 The community-detection algorithm identified four groups of speakers whose acoustic profiles were more similar to each other than to members of the other groups (Figure 1). Groups 2 and 4 consisted primarily of TD participants (81%), and were distinguished acoustically by differences in speech rate and utterance duration. Groups 1 and 3, consisted primarily of ASD participants (79%), and were distinguished from each other primarily by diverging patterns of H1H2 (associated with breathiness), with group 3 showing higher mean H1H2 and variation in H1H2, and group 1 showing lower mean H1H2, than any other group. These four groups were significantly related to performance on all the SRS subscales and on total SRS score (F(3, 25) = 6.31, p = 0.00245, with groups 1 and 3 rating higher on all SRS subscales than groups 2 and 4 (Figure 2). Group 3 in particular was distinguished by a slower speech rate, longer utterances, and a higher variation of breathiness.
 
-```{r echo = T, results = 'hide', message=FALSE, warning = F}
+```{r echo = F, results = 'hide', message=FALSE, warning = F}
 
 library(qgraph)
 library(igraph)
@@ -215,14 +215,14 @@ plot(p3)
 ```
 
 ### Linear model: SRS predicted by Voice Group
-```{r warning = FALSE, message = FALSE}
+```{r echo = F, warning = FALSE, message = FALSE}
 mod1 <- lm(data = Sub_SRS, SRS_total ~ Group)
 pander:: pander(anova(mod1))
 
 ```
 
 ### Tukey's HSD post-hoc comparisons
-```{r warning = FALSE, message = FALSE}
+```{r echo = F, warning = FALSE, message = FALSE}
 a <- aov(data = Sub_SRS, SRS_total ~ Group)
 pander::pander(TukeyHSD(a))
 ```
