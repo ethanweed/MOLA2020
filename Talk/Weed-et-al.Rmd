@@ -24,13 +24,13 @@ Study goals were (1) to identify potential sub-groups of typical and atypical sp
 
 ##Methods
 
-We analyzed speech recordings (8 scripted sentences per participant) from 15 adolescents diagnosed with ASD (mean(SD) age = 14.4 (1.48) years) with IQ scores in the typical range, and 15 adolescents with typical development (TD; mean(SD) age = 14.1(1.91) years); groups did not differ on chronological age or full-scale IQ. Participants in both the ASD and the NT groups demonstrated average to high average performance on standardized language measures (see Mayo, 2015, for details). From these speech recordings, we extracted acoustic measures of prosody and voice quality, and used a community-detection algorithm (Csardi, M. G.,2013; Reichardt & Bornholdt, 2006) to find groups of speakers who shared a common acoustic profile. We then compared these groups on the five subscales of the SRS.
+We analyzed speech recordings (8 scripted sentences per participant) from 15 adolescents diagnosed with ASD (mean(SD) age = 14.4 (1.48) years) with IQ scores in the typical range, and 15 adolescents with typical development (TD; mean(SD) age = 14.1(1.91) years); groups did not differ on chronological age or full-scale IQ. Participants in both the ASD and the NT groups demonstrated average to high average performance on standardized language measures (see Mayo, 2015, for details). From these speech recordings, we extracted acoustic measures of rhythm (Speech rate, the number of syllables/utterance duration, and articulation rate, the number of syllables / phonation time) and voice quality (mean H1H2 ond standard deviation of H1H2). We then used a community-detection algorithm (Csardi, M. G.,2013; Reichardt & Bornholdt, 2006) to find groups of speakers who shared a common acoustic profile. We then compared these groups on the five subscales of the SRS.
 
 ##Results
 
 The community-detection algorithm identified four groups of speakers whose acoustic profiles were more similar to each other than to members of the other groups (Figure 1). Groups 2 and 4 consisted primarily of TD participants (81%), and were distinguished acoustically by differences in speech rate and utterance duration. Groups 1 and 3, consisted primarily of ASD participants (79%), and were distinguished from each other primarily by diverging patterns of H1H2 (associated with breathiness), with group 3 showing higher mean H1H2 and variation in H1H2, and group 1 showing lower mean H1H2, than any other group. These four groups were significantly related to performance on all the SRS subscales and on total SRS score (F(3, 25) = 6.31, p = 0.00245, with groups 1 and 3 rating higher on all SRS subscales than groups 2 and 4 (Figure 2). Group 3 in particular was distinguished by a slower speech rate, longer utterances, and a higher variation of breathiness.
 
-```{r echo = F, results = 'hide', message=FALSE, warning = F}
+```{r echo = T, results = 'hide', message=FALSE, warning = F}
 
 library(qgraph)
 library(igraph)
@@ -215,14 +215,14 @@ plot(p3)
 ```
 
 ### Linear model: SRS predicted by Voice Group
-```{r echo = F, warning = FALSE, message = FALSE}
+```{r echo = T, warning = FALSE, message = FALSE}
 mod1 <- lm(data = Sub_SRS, SRS_total ~ Group)
 pander:: pander(anova(mod1))
 
 ```
 
 ### Tukey's HSD post-hoc comparisons
-```{r echo = F, warning = FALSE, message = FALSE}
+```{r echo = T, warning = FALSE, message = FALSE}
 a <- aov(data = Sub_SRS, SRS_total ~ Group)
 pander::pander(TukeyHSD(a))
 ```
@@ -231,7 +231,7 @@ pander::pander(TukeyHSD(a))
 
 Finally, we also parcelled out the Voice Group's SRS scores by subscale.
 
-```{r echo = FALSE, warning = FALSE, message = FALSE}
+```{r echo = T, warning = FALSE, message = FALSE}
 # plot subscale scores vs. groups
 Sub_SRS$Soc_Aware <- df_soc$Soc_Aware_T
 Sub_SRS$Soc_Cog <- df_soc$Soc_Cog_T
